@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Final Assessment | Digital Literacy Training</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      min-height: 100vh;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .page-wrapper {
+      position: relative;
+      overflow-x: hidden;
+    }
+    .floating-shapes {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .shape {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    .shape:nth-child(1) {
+      width: 80px;
+      height: 80px;
+      top: 20%;
+      left: 10%;
+      animation-delay: 0s;
+    }
+    .shape:nth-child(2) {
+      width: 120px;
+      height: 120px;
+      top: 60%;
+      right: 15%;
+      animation-delay: 2s;
+    }
+    .shape:nth-child(3) {
+      width: 60px;
+      height: 60px;
+      top: 80%;
+      left: 20%;
+      animation-delay: 4s;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(180deg); }
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(15px);
+      border-radius: 25px;
+      padding: 40px;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .main-heading {
+      text-align: center;
+      color: #2c3e50;
+      font-size: 2rem;
+      font-weight: 800;
+      padding: 60px 40px;
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                  url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+      background-size: cover;
+      background-position: center;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      margin-bottom: 40px;
+      overflow: hidden;
+      position: relative;
+    }
+    .main-heading::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+      border-radius: 20px;
+    }
+    .main-heading .logo {
+      position: absolute;
+      top: 30px;
+      left: 40px;
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid rgba(102, 126, 234, 0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      animation: pulse 3s ease-in-out infinite;
+      z-index: 2;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    .main-heading h1 {
+      position: relative;
+      z-index: 2;
+      margin-left: 120px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .quiz-section {
+      margin: 0 auto;
+      max-width: 800px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 20px;
+      padding: 40px 30px;
+      border-left: 6px solid #667eea;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+    .question {
+      margin: 20px 0;
+      padding: 15px;
+      border-left: 4px solid #1a73e8;
+      background: #f9f9f9;
+      border-radius: 8px;
+    }
+    .question p {
+      font-weight: bold;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border-radius: 8px;
+      border: 2px solid #e0e0e0;
+      font-size: 16px;
+      transition: border-color 0.3s ease;
+    }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+    button[type="button"] {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 15px 30px;
+      border: none;
+      border-radius: 25px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    button[type="button"]:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+    }
+    #result {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin-top: 20px;
+      text-align: center;
+      padding: 15px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-left: 4px solid #667eea;
+    }
+    .back-button {
+      display: inline-block;
+      margin-top: 40px;
+      text-decoration: none;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 25px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+    .back-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.6s ease;
+    }
+    .back-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+    }
+    .back-button:hover::before {
+      left: 100%;
+    }
+    @media (max-width: 768px) {
+      body {
+        padding: 10px;
+      }
+      .container {
+        padding: 20px;
+      }
+      .main-heading {
+        font-size: 2rem;
+        padding: 40px 20px;
+      }
+      .main-heading .logo {
+        width: 80px;
+        height: 80px;
+        top: 20px;
+        left: 20px;
+      }
+      .main-heading h1 {
+        margin-left: 100px;
+      }
+      .quiz-section {
+        padding: 25px 10px;
+      }
+    }
+    .username-group {
+      margin-bottom: 32px;
+      text-align: center;
+    }
+    .username-label {
+      display: block;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: #4b3fa7;
+      margin-bottom: 10px;
+      letter-spacing: 0.5px;
+    }
+    #username {
+      width: 60%;
+      max-width: 400px;
+      min-width: 220px;
+      padding: 18px 20px;
+      font-size: 1.15rem;
+      border-radius: 12px;
+      border: 2px solid #764ba2;
+      background: #f8f9fa;
+      box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+      margin: 0 auto 0 auto;
+      display: block;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+    #username:focus {
+      outline: none;
+      border-color: #667eea;
+      box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.13);
+      background: #fff;
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+  <div class="floating-shapes">
+    <div class="shape"></div>
+    <div class="shape"></div>
+    <div class="shape"></div>
+  </div>
+  <div class="container">
+    <div class="main-heading">
+      <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+      <h1>Final Assessment</h1>
+    </div>
+    <div class="quiz-section">
+      <form id="quizForm">
+        <div class="username-group">
+          <label for="username" class="username-label">Name | పేరు</label>
+          <input type="text" id="username" name="username" placeholder="Enter your name | మీ పేరు నమోదు చేయండి" required>
+        </div>
+
+        <!-- MCQs -->
+        <div class="question">
+          <p>1. What does CPU stand for<br>CPU అంటే ఏమిటి?</p>
+          <label><input type="radio" name="q1" value="Central Processing Unit"> Central Processing Unit<br>సెంట్రల్ ప్రాసెసింగ్ యూనిట్</bb></label>
+          <label><input type="radio" name="q1" value="Central Print Unit"> Central Print Unit<br>సెంట్రల్ ప్రింట్ యూనిట్</label>
+          <label><input type="radio" name="q1" value="Control Panel Unit"> Control Panel Unit<br>కన్ట్రోల్ ప్యానెల్ యూనిట్</label>
+        </div>
+
+        <div class="question">
+          <p>2. Which is an example of application software?<br>అనువర్తన సాఫ్ట్వేర్ ఉదాహరణ ఏమిటి?</p>
+          <label><input type="radio" name="q2" value="MS Word"> MS Word<br>MS వర్డ్</label>
+          <label><input type="radio" name="q2" value="Windows 10"> Windows 10<br>విన్డోస్ 10</label>
+          <label><input type="radio" name="q2" value="BIOS"> BIOS<br>బీఓఐఎస్</label>
+        </div>
+
+        <div class="question">
+          <p>3. What is the function of RAM?<br>RAM యొక్క పని ఏమిటి?</p>
+          <label><input type="radio" name="q3" value="Temporary memory"> Temporary memory<br>తాజా మెమరీ</label>
+          <label><input type="radio" name="q3" value="Permanent storage"> Permanent storage<br>స్థిర మెమరీ</label>
+          <label><input type="radio" name="q3" value="Printing data"> Printing data<br>ప్రింట్ డేటా</label>
+        </div>
+
+        <div class="question">
+          <p>4. Which is a valid email address?<br>చెల్లుబాటు అయ్యే ఇమెయిల్ చిరునామా ఏది?</p>
+          <label><input type="radio" name="q4" value="user@gmail.com"> user@gmail.com</label>
+          <label><input type="radio" name="q4" value="user#gmail.com"> user#gmail.com</label>
+          <label><input type="radio" name="q4" value="user.gmail.com"> user.gmail.com</label>
+        </div>
+
+        <div class="question">
+          <p>5. What does a browser do?<br>బ్రౌజర్ ఏమి చేస్తుంది?</p>
+          <label><input type="radio" name="q5" value="Displays websites"> Displays websites<br>వెబ్సైట్లను ప్రదర్శించును</label>
+          <label><input type="radio" name="q5" value="Edits photos"> Edits photos<br>ఫోటోలను సవరించును</label>
+          <label><input type="radio" name="q5" value="Plays music"> Plays music<br>సంగీతాన్ని ప్లే చేస్తుంది</label>
+        </div>
+
+        <!-- Fill in the blanks -->
+        <div class="question">
+          <p>6. Fill in the blank: ________ is the act of sending fake emails to steal personal data.<br>ఖాళీని పూరించండి: ________ అనేది వ్యక్తిగత డేటాను దొంగిలించడానికి నకిలీ ఇమెయిల్‌లను పంపే చర్య.</p>
+          <input type="text" name="q6" placeholder="Enter your answer">
+        </div>
+
+        <div class="question">
+          <p>7. Fill in the blank: The keyboard is an _______ device.<br>ఖాళీని పూరించండి: కీబోర్డ్ ఒక _______ పరికరం.</p>
+          <input type="text" name="q7" placeholder="Enter your answer">
+        </div>
+
+        <div class="question">
+          <p>8. Fill in the blank: The part of the URL that shows a secure site is ______.<br>ఖాళీని పూరించండి: URL లో సురక్షిత సైట్‌ను చూపించే భాగం ______.</p>
+          <input type="text" name="q8" placeholder="Enter your answer">
+        </div>
+
+        <div class="question">
+          <p>9. Fill in the blank: ______ is software used to protect computers from viruses.<br>ఖాళీని పూరించండి: ______ అనేది కంప్యూటర్లను వైరస్ల నుండి రక్షించడానికి ఉపయోగించే సాఫ్ట్‌వేర్.</p>
+          <input type="text" name="q9" placeholder="Enter your answer">
+        </div>
+
+        <div class="question">
+          <p>10. Fill in the blank: _______ settings help protect your private information online.<br>ఖాళీని పూరించండి: _______ సెట్టింగ్లు మీ వ్యక్తిగత సమాచారాన్ని ఆన్లైన్ రక్షించడానికి సహాయపడుతాయి.</p>
+          <input type="text" name="q10" placeholder="Enter your answer">
+        </div>
+
+        <!-- Abbreviations -->
+        <div class="question">
+          <p>11. What is the full form of URL?<br>URL యొక్క పూర్తి పేరు ఏమిటి?</p>
+          <input type="text" name="q11" placeholder="Enter your answer">
+        </div>
+
+        <div class="question">
+          <p>12. What is the full form of ROM?<br>ROM యొక్క పూర్తి పేరు ఏమిటి?</p>
+          <input type="text" name="q12" placeholder="Enter your answer">
+        </div>
+
+        <div class="question">
+          <p>13. What is the full form of OS?<br>OS యొక్క పూర్తి పేరు ఏమిటి?</p>
+          <input type="text" name="q13" placeholder="Enter your answer">
+        </div>
+
+        <!-- More MCQs -->
+        <div class="question">
+          <p>14. Which of the following is used for video calls?<br>వీడియో కాల్స్ కోసం ఏది ఉపయోగించబడుతుంది?</p>
+          <label><input type="radio" name="q14" value="Zoom"> Zoom<br>జూమ్</label>
+          <label><input type="radio" name="q14" value="Paint"> Paint<br>పేంట్</label>
+          <label><input type="radio" name="q14" value="Notepad"> Notepad<br>నోట్పేడ్</label>
+        </div>
+
+        <div class="question">
+          <p>15. What is a strong password?<br>శక్తివంతమైన సంకేతపదం ఏమిటి?</p>
+          <label><input type="radio" name="q15" value="Ab@29#pq"> Ab@29#pq<br>అబ్@29#ప్యూ</label>
+          <label><input type="radio" name="q15" value="abc123"> abc123<br>అబ్స్స్123</label>
+          <label><input type="radio" name="q15" value="yourname"> YourName<br>మీ పేరు</label>
+        </div>
+
+        <button type="button" onclick="checkAnswers()">Submit Assessment</button>
+        <div id="result"></div>
+      </form>
+      <div style="text-align: center;">
+        <a href="home.html" class="back-button">← Back to Home</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function checkAnswers() {
+  const correctAnswers = {
+    q1: "Central Processing Unit",
+    q2: "MS Word",
+    q3: "Temporary memory",
+    q4: "user@gmail.com",
+    q5: "Displays websites",
+    q6: "phishing",
+    q7: "input",
+    q8: "https",
+    q9: "antivirus",
+    q10: "privacy",
+    q11: "uniform resource locator",
+    q12: "read only memory",
+    q13: "operating system",
+    q14: "Zoom",
+    q15: "Ab@29#pq"
+  };
+
+  let score = 0;
+
+  for (let i = 1; i <= 15; i++) {
+    const qName = "q" + i;
+    const inputRadio = document.querySelector(`input[name="${qName}"]:checked`);
+    const inputText = document.querySelector(`input[name="${qName}"][type="text"]`);
+
+    let userAnswer = null;
+
+    if (inputRadio) {
+      userAnswer = inputRadio.value.trim();
+    } else if (inputText && inputText.value.trim() !== "") {
+      userAnswer = inputText.value.trim().toLowerCase();
+    }
+
+    const correct = correctAnswers[qName].toLowerCase();
+
+    if (userAnswer !== null && userAnswer === correct) {
+      score++;
+    }
+  }
+
+  const result = document.getElementById("result");
+  result.textContent = `🎓 You scored ${score} out of 15. ${
+    score === 15 ? "Outstanding!" : score >= 12 ? "Excellent!" : score >= 9 ? "Good job!" : "Keep practicing!"
+  }`;
+  localStorage.setItem('score_final', `${score} / 10`);
+
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Communication - Digital Literacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .main-heading {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 50px 40px 30px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)),
+                        url('https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        .intro-section::before {
+            content: '💬';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: center;
+        }
+        .modules {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 50px 0;
+        }
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+        .module-card img {
+            width: 30%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .module-card:hover img {
+            transform: scale(1.05);
+        }
+        .module-card h3 {
+            margin: 20px 0 15px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .module-card p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: #34495e;
+            line-height: 1.6;
+        }
+        .module-card .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .module-card .features p {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+        .best-practices {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+        }
+        .best-practices h3 {
+            margin-bottom: 20px;
+            font-size: 1.4rem;
+        }
+        .best-practices ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 auto;
+            max-width: 600px;
+            text-align: left;
+        }
+        .best-practices li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            font-size: 1rem;
+        }
+        .best-practices li:last-child {
+            border-bottom: none;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+        .back-button:hover::before {
+            left: 100%;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .main-heading {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            .modules {
+                gap: 20px;
+            }
+            .module-card {
+                padding: 20px;
+            }
+            .module-card h3 {
+                font-size: 1.3rem;
+            }
+            .module-card p {
+                font-size: 1rem;
+            }
+        }
+        .visit-btn {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            padding: 10px 22px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 18px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.18);
+            position: relative;
+            overflow: hidden;
+        }
+        .visit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .visit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.28);
+        }
+        .visit-btn:hover::before {
+            left: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Online Communication<br>ఆన్‌లైన్ కమ్యూనికేషన్</h1>
+            </div>
+            <div class="intro-section">
+                <p class="intro-text">
+                    Master the art of digital communication across different platforms and mediums.<br>
+                    వివిధ ప్లాట్‌ఫారమ్‌లు మరియు మాధ్యమాలలో డిజిటల్ కమ్యూనికేషన్ కళను నేర్చుకోండి.
+                </p>
+            </div>
+            <div class="modules">
+                <div class="module-card">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.qBYWVDuwXTPBz2_glilslgHaE8&pid=Api&P=0&h=180" alt="Text Communication">
+                    <h3>Text-Based Communication<br>టెక్స్ట్ ఆధారిత కమ్యూనికేషన్</h3>
+                    <p>
+                        Text-based communication includes email, instant messaging, and text messaging. It's one of the most common forms of online communication.<br>
+                        టెక్స్ట్ ఆధారిత కమ్యూనికేషన్‌లో ఇమెయిల్, ఇన్‌స్టంట్ మెసేజింగ్, మరియు టెక్స్ట్ మెసేజింగ్ ఉన్నాయి. ఇది ఆన్‌లైన్ కమ్యూనికేషన్‌లో అత్యంత సాధారణ రూపాలలో ఒకటి.
+                    </p>
+                    <div class="features">
+                        <p><strong>Email:</strong> For formal and professional communication<br><strong>ఇమెయిల్:</strong> అధికారిక మరియు ప్రొఫెషనల్ కమ్యూనికేషన్ కోసం</p>
+                        <p><strong>Instant Messaging:</strong> For quick conversations<br><strong>ఇన్‌స్టంట్ మెసేజింగ్:</strong> త్వరిత సంభాషణల కోసం</p>
+                        <p><strong>Text Messaging:</strong> For personal communication<br><strong>టెక్స్ట్ మెసేజింగ్:</strong> వ్యక్తిగత కమ్యూనికేషన్ కోసం</p>
+                        <p><strong>Discussion Forums:</strong> For community engagement<br><strong>డిస్కషన్ ఫోరమ్‌లు:</strong> కమ్యూనిటీ నిమగ్నత కోసం</p>
+                    </div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/561/561127.png" alt="Text Messaging Icon" style="width: 80px;height: 80px; display: block; margin: 20px auto 0 auto;">
+                </div>
+                <div class="module-card">
+                    <img src="https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80" alt="Video Communication">
+                    <h3>Audio and Video Communication<br>ఆడియో మరియు వీడియో కమ్యూనికేషన్</h3>
+                    <p>
+                        Audio and video communication platforms enable real-time meetings, calls, and webinars for personal, educational, and professional use.<br>
+                        ఆడియో మరియు వీడియో కమ్యూనికేషన్ ప్లాట్‌ఫారమ్‌లు వ్యక్తిగత, విద్యా మరియు ప్రొఫెషనల్ ఉపయోగాల కోసం రియల్-టైమ్ మీటింగ్‌లు, కాల్స్ మరియు వెబినార్‌లను అనుమతిస్తాయి.
+                    </p>
+                    <div class="horizontal-cards">
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">Zoom</div>
+                            <div class="mini-desc">Popular for video meetings, webinars, and online classes.<br>వీడియో మీటింగ్‌లు, వెబినార్‌లు, ఆన్‌లైన్ తరగతులకు ప్రసిద్ధి.</div>
+                            <a href="https://zoom.us/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="https://www.freepnglogos.com/uploads/zoom-logo-png/zoom-meeting-logo-transparent-png-21.png" alt="Zoom Logo">
+                            
+                        </div>
+                        <div class="mini-card">
+                           
+                            <div class="mini-title">Skype</div>
+                            <div class="mini-desc">Classic tool for video/audio calls and instant messaging.<br>వీడియో/ఆడియో కాల్స్, ఇన్‌స్టంట్ మెసేజింగ్ కోసం క్లాసిక్ టూల్.</div>
+                            <a href="https://www.skype.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="http://pluspng.com/img-png/skype-logo-png-skype-logo-png-and-vector-logo-img-4096x4096.png" alt="Skype Logo">
+                        </div>
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">Google Meet</div>
+                            <div class="mini-desc">Secure video meetings integrated with Google Workspace.<br>Google Workspaceతో ఇంటిగ్రేట్ అయిన సురక్షిత వీడియో మీటింగ్‌లు.</div>
+                            <a href="https://meet.google.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="https://static.vecteezy.com/system/resources/thumbnails/021/496/363/small_2x/google-meet-symbol-logo-design-illustration-free-vector.jpg" alt="Google Meet Logo">
+                        </div>
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">Microsoft Teams</div>
+                            <div class="mini-desc">Collaboration platform for chat, meetings, and file sharing.<br>చాట్, మీటింగ్‌లు, ఫైల్ షేరింగ్ కోసం సహకార ప్లాట్‌ఫారమ్.</div>
+                            <a href="https://www.microsoft.com/en/microsoft-teams/group-chat-software" target="_blank" class="visit-btn">Visit</a>
+                            <img src="https://vectorseek.com/wp-content/uploads/2021/12/Microsoft-Teams-Logo-Vector.jpg" alt="Microsoft Teams Logo">
+                        </div>
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">Webex</div>
+                            <div class="mini-desc">Enterprise-grade video conferencing and webinars.<br>ఎంటర్‌ప్రైజ్-గ్రేడ్ వీడియో కాన్ఫరెన్సింగ్ మరియు వెబినార్‌లు.</div>
+                            <a href="https://www.webex.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="https://logosandtypes.com/wp-content/uploads/2022/03/Webex.png" alt="Webex Logo">
+                        </div>
+                    </div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/3062/3062634.png" alt="Video Call Icon" style="width: 80px;height: 80px; display: block; margin: 20px auto 0 auto;">
+                </div>
+                <div class="module-card">
+                    <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80" alt="Social Media">
+                    <h3>Social Media Communication<br>సోషల్ మీడియా కమ్యూనికేషన్</h3>
+                    <p>
+                        Social media platforms provide various ways to communicate, share content, and connect with others through posts, stories, and direct messages.<br>
+                        సోషల్ మీడియా ప్లాట్‌ఫారమ్‌లు పోస్ట్‌లు, స్టోరీలు, మరియు డైరెక్ట్ మెసేజెస్ ద్వారా ఇతరులతో కమ్యూనికేట్ చేయడానికి, కంటెంట్‌ను పంచుకోవడానికి మరియు కనెక్ట్ కావడానికి అనేక మార్గాలను అందిస్తాయి.
+                    </p>
+                    <div class="horizontal-cards">
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">Instagram</div>
+                            <div class="mini-desc">Photo and video sharing, stories, and direct messaging.<br>ఫోటో, వీడియో షేరింగ్, స్టోరీలు, డైరెక్ట్ మెసేజింగ్.</div>
+                            <a href="https://www.instagram.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="http://1000logos.net/wp-content/uploads/2017/02/New-Instagram-logo.jpg" alt="Instagram Logo">
+                        </div>
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">Facebook</div>
+                            <div class="mini-desc">Connect with friends, join groups, and share updates.<br>స్నేహితులతో కనెక్ట్ అవ్వండి, గ్రూప్‌లలో చేరండి, అప్డేట్‌లు షేర్ చేయండి.</div>
+                            <a href="https://www.facebook.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="https://static.vecteezy.com/system/resources/previews/013/901/773/original/facebook-icon-ios-facebook-social-media-logo-on-white-background-free-free-vector.jpg" alt="Facebook Logo">
+                        </div>
+                        <div class="mini-card">
+                            
+                            <div class="mini-title">LinkedIn</div>
+                            <div class="mini-desc">Professional networking, job search, and business updates.<br>ప్రొఫెషనల్ నెట్‌వర్కింగ్, ఉద్యోగ శోధన, వ్యాపార అప్డేట్‌లు.</div>
+                            <a href="https://www.linkedin.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="http://1000logos.net/wp-content/uploads/2017/03/Color-of-the-LinkedIn-Logo.jpg" alt="Facebook Logo">
+                        </div>
+                        <div class="mini-card">
+                           
+                            <div class="mini-title">Twitter</div>
+                            <div class="mini-desc">Share quick updates, follow trends, and join conversations.<br>త్వరిత అప్డేట్‌లు షేర్ చేయండి, ట్రెండ్‌లను ఫాలో అవ్వండి, సంభాషణల్లో పాల్గొనండి.</div>
+                            <a href="https://www.twitter.com/" target="_blank" class="visit-btn">Visit</a>
+                            <img src="https://static.vecteezy.com/system/resources/previews/018/930/745/original/twitter-logo-twitter-icon-transparent-free-free-png.png" alt="Twitter Logo">
+                        </div>
+                    </div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="Social Media Icon" style="width: 80px;height: 80px; display: block; margin: 20px auto 0 auto;">
+                </div>
+            </div>
+            <div class="best-practices">
+                <h3>Communication Best Practices<br>కమ్యూనికేషన్ ఉత్తమ పద్ధతులు</h3>
+                <ul>
+                    <li>Be clear and concise in your messages<br>మీ సందేశాలలో స్పష్టత మరియు సంక్షిప్తత ఉండాలి</li>
+                    <li>Use appropriate tone for the context<br>సందర్భానికి తగిన టోన్ ఉపయోగించండి</li>
+                    <li>Respect others' privacy and boundaries<br>ఇతరుల గోప్యత మరియు పరిమితులను గౌరవించండి</li>
+                    <li>Proofread before sending important messages<br>ప్రాముఖ్యత ఉన్న సందేశాలను పంపే ముందు పరిశీలించండి</li>
+                    <li>Use emojis and formatting appropriately<br>ఎమోజీలు మరియు ఫార్మాటింగ్‌ను సరైన విధంగా ఉపయోగించండి</li>
+                    <li>Be mindful of cultural differences<br>సాంస్కృతిక తేడాలను గుర్తుంచుకోండి</li>
+                    <li>Maintain professional etiquette in work communications<br>పని కమ్యూనికేషన్‌లో ప్రొఫెషనల్ ఎటికెట్‌ను పాటించండి</li>
+                </ul>
+            </div>
+            <div style="text-align: center;">
+                <a href="InternetNavigation.html" class="back-button">← Back to Internet Navigation</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

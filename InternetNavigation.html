@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Internet Navigation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .main-heading {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.8rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://c4.wallpaperflare.com/wallpaper/721/375/720/blue-flower-background-artistic-wallpaper-preview.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-heading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+        }
+
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .intro-section::before {
+            content: '🌐';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .module-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .module-card h3 {
+            margin: 20px 0 15px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .module-card p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .module-card .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .module-card .features p {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+
+        .module-card a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-card a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-card a:hover::before {
+            left: 100%;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .content-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            margin: 40px 0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .content-divider::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .main-heading {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            
+            .main-heading .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .main-heading h1 {
+                margin-left: 100px;
+            }
+            
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            
+            .modules {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-card {
+                padding: 25px;
+            }
+            
+            .module-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .module-card p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Internet Navigation</h1>
+            </div>
+            
+            <div class="intro-section">
+                <p class="intro-text">
+                    This module covers essential internet navigation skills needed to browse the web effectively and safely. Learn how to search for information, navigate websites, and stay safe online while exploring the digital world.<br><br>
+                    ఈ మాడ్యూల్ వెబ్‌ని సమర్థవంతంగా మరియు సురక్షితంగా బ్రౌజ్ చేయడానికి అవసరమైన ముఖ్యమైన ఇంటర్నెట్ నావిగేషన్ నైపుణ్యాలను కవర్ చేస్తుంది. సమాచారాన్ని శోధించడం, వెబ్‌సైట్లను నావిగేట్ చేయడం మరియు డిజిటల్ ప్రపంచాన్ని అన్వేషించేటప్పుడు ఆన్‌లైన్‌లో సురక్షితంగా ఉండడం ఎలా నేర్చుకోండి.
+                </p>
+            </div>
+
+            <div class="content-divider"></div>
+
+            <div class="modules">
+                <div class="module-card">
+                    <img src="https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2069&q=80" alt="Navigate the Internet">
+                    <h3>Navigate the Internet<br>ఇంటర్నెట్‌ని నావిగేట్ చేయండి</h3>
+                    <p>Master the fundamentals of web browsing including URLs, navigation, and browser features.<br> URLలు, నావిగేషన్ మరియు బ్రౌసర్ ఫీచర్లతో సహా వెబ్ బ్రౌసింగ్ యొక్క ప్రాథమికాలను నేర్చుకోండి.</p>
+                    <div class="features">
+                        <p>• Use Search Engine సెర్చ్ ఇంజిన్‌ని ఉపయోగించండి</p>
+                        <p>• Type URL URLని టైప్ చేయండి</p>
+                        <p>• Follow Links లింక్‌లను అనుసరించండి</p>
+                    </div>
+                    <a href="NavigateTheInternet.html">Start Learning</a>
+                </div>
+
+                <div class="module-card">
+                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Search Techniques">
+                    <h3>Search Techniques<br>శోధన పద్ధతులు</h3>
+                    <p>Learn how to effectively use search engines to find information quickly and accurately.<br> సమాచారాన్ని వేగవంతంగా మరియు ఖచ్చితంగా కనుగొనడానికి సెర్చ్ ఇంజిన్లను సమర్థవంతంగా ఎలా ఉపయోగించాలో నేర్చుకోండి.</p>
+                    <div class="features">
+                        <p>• Type టైప్ చేయండి</p>
+                        <p>• Image చిత్రం</p>
+                        <p>• Scan స్కాన్ చేయండి</p>
+                    </div>
+                    <a href="SearchTechniques.html">Start Learning</a>
+                </div>
+
+                <div class="module-card">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="Online Communication">
+                    <h3>Online Communication<br>ఆన్‌లైన్ కమ్యూనికేషన్</h3>
+                    <p>Understand internet safety practices to protect yourself from scams, viruses, and privacy threats.<br> మోసాలు, వైరస్లు మరియు గోప్యతా ముప్పుల నుండి మిమ్మల్ని రక్షించడానికి ఇంటర్నెట్ భద్రతా పద్ధతులను అర్థం చేసుకోండి.</p>
+                    <div class="features">
+                        <p>• Text Based టెక్స్ట్ ఆధారిత</p>
+                        <p>• Video/Audio Based వీడియో/ఆడియో ఆధారిత</p>
+                        <p>• Social Media సోషల్ మీడియా</p>
+                    </div>
+                    <a href="OnlineCommunication.html">Start Learning</a>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="Quiz_Internet_Navigation.html" class="back-button">Take Quiz</a>
+            </div>
+            <div style="text-align: center;">
+                <a href="home.html" class="back-button">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

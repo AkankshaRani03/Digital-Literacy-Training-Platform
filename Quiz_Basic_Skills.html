@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz: Basic Computer Skills | Digital Literacy Training</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper { position: relative; overflow-x: hidden; }
+        .floating-shapes {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1;
+        }
+        .shape {
+            position: absolute; background: rgba(255,255,255,0.1); border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 120px; height: 120px; top: 60%; right: 15%; animation-delay: 2s; }
+        .shape:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 20%; animation-delay: 4s; }
+        @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-20px) rotate(180deg);} }
+        .container {
+            max-width: 1200px; margin: 0 auto; background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(15px); border-radius: 25px; padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.1); position: relative; z-index: 2;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        .main-heading {
+            text-align: center; color: #2c3e50; font-size: 2.2rem; font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8)),
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-position: center; border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-bottom: 40px; overflow: hidden; position: relative;
+        }
+        .main-heading::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+            border-radius: 20px;
+        }
+        .main-heading .logo {
+            position: absolute; top: 30px; left: 40px; width: 100px; height: 100px;
+            border-radius: 50%; object-fit: cover; border: 4px solid rgba(102,126,234,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: pulse 3s ease-in-out infinite; z-index: 2;
+        }
+        @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+        .main-heading h1 { position: relative; z-index: 2; margin-left: 120px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);}
+        .quiz-section {
+            margin: 0 auto; max-width: 800px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px; padding: 40px 30px; border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: relative;
+        }
+        .question { margin: 20px 0; padding: 15px; border-left: 4px solid #1a73e8; background: #f9f9f9; border-radius: 8px; }
+        .question p { font-weight: bold; }
+        label { display: block; margin: 8px 0; cursor: pointer; }
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            margin-top: 8px;
+            border-radius: 8px;
+            border: 2px solid #e0e0e0;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        button[type="button"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; padding: 15px 30px; border: none; border-radius: 25px;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer; margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(102,126,234,0.3); transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        button[type="button"]:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(102,126,234,0.4);}
+        #result { font-size: 1.2rem; font-weight: bold; margin-top: 20px; text-align: center; }
+        .back-button {
+            display: inline-block; margin-top: 40px; text-decoration: none; padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white; border-radius: 25px; font-weight: 600; font-size: 1.1rem;
+            transition: all 0.3s ease; box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+            position: relative; overflow: hidden;
+        }
+        .back-button::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .back-button:hover { transform: translateY(-3px); box-shadow: 0 12px 25px rgba(102,126,234,0.4);}
+        .back-button:hover::before { left: 100%; }
+        @media (max-width: 768px) {
+            body { padding: 10px; }
+            .container { padding: 20px; }
+            .main-heading { font-size: 2rem; padding: 40px 20px; }
+            .main-heading .logo { width: 80px; height: 80px; top: 20px; left: 20px; }
+            .main-heading h1 { margin-left: 100px; }
+            .quiz-section { padding: 25px 10px; }
+        }
+        .username-group {
+          margin-bottom: 32px;
+          text-align: center;
+        }
+        .username-label {
+          display: block;
+          font-size: 1.25rem;
+          font-weight: 600;
+          color: #4b3fa7;
+          margin-bottom: 10px;
+          letter-spacing: 0.5px;
+        }
+        #username {
+          width: 60%;
+          max-width: 400px;
+          min-width: 220px;
+          padding: 18px 20px;
+          font-size: 1.15rem;
+          border-radius: 12px;
+          border: 2px solid #764ba2;
+          background: #f8f9fa;
+          box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+          margin: 0 auto 0 auto;
+          display: block;
+          transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #username:focus {
+          outline: none;
+          border-color: #667eea;
+          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.13);
+          background: #fff;
+        }
+    </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    <div class="container">
+      <div class="main-heading">
+        <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+        <h1>Basic Computer Skills Quiz<br><span style='font-size:1.2rem;font-weight:normal;color:#764ba2;'></h1>
+      </div>
+      <div class="quiz-section">
+        <form id="quizForm">
+          <div class="username-group">
+            <label for="username" class="username-label">Name | పేరు</label>
+            <input type="text" id="username" name="username" placeholder="Enter your name | మీ పేరు నమోదు చేయండి" required>
+          </div>
+          <div class="question">
+            <p>1. Which device displays the output from a computer?<br><span style='font-weight:normal;color:#764ba2;'>కంప్యూటర్ అవుట్‌పుట్‌ను ప్రదర్శించే పరికరం ఏది?</span></p>
+            <label><input type="radio" name="q1" value="A"> Monitor<br><span style='font-weight:normal;color:#764ba2;'>మానిటర్</span></label>
+            <label><input type="radio" name="q1" value="B"> CPU<br><span style='font-weight:normal;color:#764ba2;'>సిపియు</span></label>
+            <label><input type="radio" name="q1" value="C"> Keyboard<br><span style='font-weight:normal;color:#764ba2;'>కీబోర్డ్</span></label>
+            <label><input type="radio" name="q1" value="D"> Printer<br><span style='font-weight:normal;color:#764ba2;'>ప్రింటర్</span></label>
+          </div>
+          <div class="question">
+            <p>2. Which of the following is responsible for processing data?<br><span style='font-weight:normal;color:#764ba2;'>డేటాను ప్రాసెస్ చేయడానికి బాధ్యత వహించే పరికరం ఏది?</span></p>
+            <label><input type="radio" name="q2" value="A"> Monitor<br><span style='font-weight:normal;color:#764ba2;'>మానిటర్</span></label>
+            <label><input type="radio" name="q2" value="B"> CPU<br><span style='font-weight:normal;color:#764ba2;'>సిపియు</span></label>
+            <label><input type="radio" name="q2" value="C"> Mouse<br><span style='font-weight:normal;color:#764ba2;'>మౌస్</span></label>
+            <label><input type="radio" name="q2" value="D"> Scanner<br><span style='font-weight:normal;color:#764ba2;'>స్కానర్</span></label>
+          </div>
+          <div class="question">
+            <p>3. Which one of these is an example of input device?<br><span style='font-weight:normal;color:#764ba2;'>ఇవన్నీ లో ఏది ఇన్‌పుట్ పరికరం ఉదాహరణ?</span></p>
+            <label><input type="radio" name="q3" value="A"> Printer<br><span style='font-weight:normal;color:#764ba2;'>ప్రింటర్</span></label>
+            <label><input type="radio" name="q3" value="B"> Mouse<br><span style='font-weight:normal;color:#764ba2;'>మౌస్</span></label>
+            <label><input type="radio" name="q3" value="C"> Speaker<br><span style='font-weight:normal;color:#764ba2;'>స్పీకర్</span></label>
+            <label><input type="radio" name="q3" value="D"> Monitor<br><span style='font-weight:normal;color:#764ba2;'>మానిటర్</span></label>
+          </div>
+          <div class="question">
+            <p>4. What type of software is Windows 10?<br><span style='font-weight:normal;color:#764ba2;'>Windows 10 ఏ రకమైన సాఫ్ట్‌వేర్?</span></p>
+            <label><input type="radio" name="q4" value="A"> Application software<br><span style='font-weight:normal;color:#764ba2;'>అనువర్తన సాఫ్ట్‌వేర్</span></label>
+            <label><input type="radio" name="q4" value="B"> System software<br><span style='font-weight:normal;color:#764ba2;'>సిస్టమ్ సాఫ్ట్‌వేర్</span></label>
+            <label><input type="radio" name="q4" value="C"> Utility software<br><span style='font-weight:normal;color:#764ba2;'>యుటిలిటీ సాఫ్ట్‌వేర్</span></label>
+            <label><input type="radio" name="q4" value="D"> Malware<br><span style='font-weight:normal;color:#764ba2;'>మాల్వేర్</span></label>
+          </div>
+          <div class="question">
+            <p>5. Which software helps detect and remove viruses?<br><span style='font-weight:normal;color:#764ba2;'>వైరస్‌లను గుర్తించడానికి మరియు తొలగించడానికి సహాయపడే సాఫ్ట్‌వేర్ ఏది?</span></p>
+            <label><input type="radio" name="q5" value="A"> MS Word<br><span style='font-weight:normal;color:#764ba2;'>ఎంఎస్ వర్డ్</span></label>
+            <label><input type="radio" name="q5" value="B"> Paint<br><span style='font-weight:normal;color:#764ba2;'>పెయింట్</span></label>
+            <label><input type="radio" name="q5" value="C"> Antivirus<br><span style='font-weight:normal;color:#764ba2;'>యాంటీవైరస్</span></label>
+            <label><input type="radio" name="q5" value="D"> File Manager<br><span style='font-weight:normal;color:#764ba2;'>ఫైల్ మేనేజర్</span></label>
+          </div>
+          <div class="question">
+            <p>6. What is MS Word used for?<br><span style='font-weight:normal;color:#764ba2;'>MS Word ను ఏ కోసం ఉపయోగిస్తారు?</span></p>
+            <label><input type="radio" name="q6" value="A"> Creating text documents<br><span style='font-weight:normal;color:#764ba2;'>పాఠ్య డాక్యుమెంట్లను సృష్టించడం</span></label>
+            <label><input type="radio" name="q6" value="B"> Playing games<br><span style='font-weight:normal;color:#764ba2;'>గేమ్స్ ఆడడం</span></label>
+            <label><input type="radio" name="q6" value="C"> Editing videos<br><span style='font-weight:normal;color:#764ba2;'>వీడియోలను ఎడిట్ చేయడం</span></label>
+            <label><input type="radio" name="q6" value="D"> Coding applications<br><span style='font-weight:normal;color:#764ba2;'>అప్లికేషన్లను కోడ్ చేయడం</span></label>
+          </div>
+          <div class="question">
+            <p>7. Which of these is NOT a hardware component?<br><span style='font-weight:normal;color:#764ba2;'>ఇవన్నీ లో ఏది హార్డ్‌వేర్ భాగం కాదు?</span></p>
+            <label><input type="radio" name="q7" value="A"> Monitor<br><span style='font-weight:normal;color:#764ba2;'>మానిటర్</span></label>
+            <label><input type="radio" name="q7" value="B"> MS Word<br><span style='font-weight:normal;color:#764ba2;'>ఎంఎస్ వర్డ్</span></label>
+            <label><input type="radio" name="q7" value="C"> Keyboard<br><span style='font-weight:normal;color:#764ba2;'>కీబోర్డ్</span></label>
+            <label><input type="radio" name="q7" value="D"> CPU<br><span style='font-weight:normal;color:#764ba2;'>సిపియు</span></label>
+          </div>
+          <div class="question">
+            <p>8. Which application is used to browse the Internet?<br><span style='font-weight:normal;color:#764ba2;'>ఇంటర్నెట్‌ను బ్రౌజ్ చేయడానికి ఉపయోగించే అనువర్తనం ఏది?</span></p>
+            <label><input type="radio" name="q8" value="A"> Notepad<br><span style='font-weight:normal;color:#764ba2;'>నోట్ప్యాడ్</span></label>
+            <label><input type="radio" name="q8" value="B"> MS Excel<br><span style='font-weight:normal;color:#764ba2;'>ఎంఎస్ ఎక్సెల్</span></label>
+            <label><input type="radio" name="q8" value="C"> Chrome<br><span style='font-weight:normal;color:#764ba2;'>క్రోమ్</span></label>
+            <label><input type="radio" name="q8" value="D"> WordPad<br><span style='font-weight:normal;color:#764ba2;'>వర్డ్‌ప్యాడ్</span></label>
+          </div>
+          <div class="question">
+            <p>9. What is application software?<br><span style='font-weight:normal;color:#764ba2;'>అనువర్తన సాఫ్ట్‌వేర్ అంటే ఏమిటి?</span></p>
+            <label><input type="radio" name="q9" value="A"> Software used for specific tasks like writing or drawing<br><span style='font-weight:normal;color:#764ba2;'>వ్రాయడం లేదా డ్రాయింగ్ వంటి నిర్దిష్ట పనుల కోసం ఉపయోగించే సాఫ్ట్‌వేర్</span></label>
+            <label><input type="radio" name="q9" value="B"> Controls hardware directly<br><span style='font-weight:normal;color:#764ba2;'>హార్డ్‌వేర్‌ను నేరుగా నియంత్రిస్తుంది</span></label>
+            <label><input type="radio" name="q9" value="C"> Manages system startup<br><span style='font-weight:normal;color:#764ba2;'>సిస్టమ్ స్టార్టప్‌ను నిర్వహిస్తుంది</span></label>
+            <label><input type="radio" name="q9" value="D"> Used for cleaning computer parts<br><span style='font-weight:normal;color:#764ba2;'>కంప్యూటర్ భాగాలను శుభ్రపరచడానికి ఉపయోగిస్తారు</span></label>
+          </div>
+          <div class="question">
+            <p>10. Which component temporarily stores data being used?<br><span style='font-weight:normal;color:#764ba2;'>ఉపయోగించబడుతున్న డేటాను తాత్కాలికంగా నిల్వ చేసే భాగం ఏది?</span></p>
+            <label><input type="radio" name="q10" value="A"> ROM<br><span style='font-weight:normal;color:#764ba2;'>ఆర్‌ఓఎమ్</span></label>
+            <label><input type="radio" name="q10" value="B"> RAM<br><span style='font-weight:normal;color:#764ba2;'>రామ్</span></label>
+            <label><input type="radio" name="q10" value="C"> Hard Drive<br><span style='font-weight:normal;color:#764ba2;'>హార్డ్ డ్రైవ్</span></label>
+            <label><input type="radio" name="q10" value="D"> Monitor<br><span style='font-weight:normal;color:#764ba2;'>మానిటర్</span></label>
+          </div>
+          <button type="button" onclick="checkAnswers()">Submit Answers<br><span style='font-weight:normal;color:#fff;'></span></button>
+          <div id="result"></div>
+        </form>
+        <div style="text-align: center;">
+          <a href="home.html" class="back-button">← Back to Home<br><span style='font-weight:normal;color:#fff;'></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+<script>
+function checkAnswers() {
+    const answers = {
+        q1: "A", q2: "B", q3: "B", q4: "B", q5: "C",
+        q6: "A", q7: "B", q8: "C", q9: "A", q10: "B"
+    };
+    let score = 0;
+    for (let i = 1; i <= 10; i++) {
+        const selected = document.querySelector(`input[name=\"q${i}\"]:checked`);
+        if (selected && selected.value === answers[`q${i}`]) {
+            score++;
+        }
+    }
+    const username = document.getElementById("username").value.trim();
+    if (!username) {
+        document.getElementById("result").innerText = "Please enter your name.";
+        return;
+    }
+    document.getElementById("result").innerText = `You scored ${score} out of 10. ${score === 10 ? "🎉 Excellent!" : score >= 7 ? "✅ Good job!" : "🔄 Try again to improve."}`;
+
+    fetch("/submit-quiz", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, module: "Basic Computer Skills", score })
+    })
+    .then(res => res.json())
+    .then(data => console.log("Saved:", data))
+    .catch(err => console.error("Error:", err));
+
+localStorage.setItem('score_bcs', `${score} / 10`);
+}
+</script>
+</body>
+</html>

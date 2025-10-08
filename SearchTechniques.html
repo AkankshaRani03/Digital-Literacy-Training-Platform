@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Techniques - Digital Literacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .main-heading {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 50px 40px 30px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('http://www.psd-dude.com/tutorials/resources-images/presentation-background/simple-presentation-background.jpg');
+            
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        .intro-section::before {
+            content: '🔍';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: center;
+        }
+        .modules {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 50px 0;
+        }
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+        .module-card img {
+            width: 30%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+        .module-card:hover img {
+            transform: scale(1.05);
+        }
+        .module-card h3 {
+            margin: 20px 0 15px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+        .module-card p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: #34495e;
+            line-height: 1.6;
+        }
+        .module-card .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        .module-card .features p {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+        .back-button:hover::before {
+            left: 100%;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .main-heading {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            .main-heading .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+            .main-heading h1 {
+                margin-left: 100px;
+            }
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            .modules {
+                gap: 20px;
+            }
+            .module-card {
+                padding: 20px;
+            }
+            .module-card h3 {
+                font-size: 1.3rem;
+            }
+            .module-card p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Search Techniques<br>శోధన పద్ధతులు</h1>
+            </div>
+            <div class="intro-section">
+                <p class="intro-text">
+                    Master advanced search strategies to find information quickly and accurately.<br>
+                    వేగంగా మరియు ఖచ్చితంగా సమాచారాన్ని కనుగొనడానికి ఆధునిక శోధన పద్ధతులను నేర్చుకోండి.
+                </p>
+            </div>
+            <div class="modules">
+                <div class="module-card">
+                    <img src="https://www.thoughtco.com/thmb/rferYeoPWu4OPBBmELMujmKzAQI=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/182786404-56a9f6725f9b58b7d00038e0-dbb335ed535b491389bfca8ac9ed2be6.jpg" alt="Text Search Example">
+                    <h3>1. Search via Type (Text Search)<br>టెక్స్ట్ శోధన ద్వారా శోధించండి</h3>
+                    <p>The most common way to search the internet is by typing keywords into a search engine like Google, Bing, or Yahoo. You can use questions, specific keywords, and operators like AND, OR, and quotes for exact matches.<br>
+                    ఇంటర్నెట్‌లో శోధించడానికి అత్యంత సాధారణ మార్గం Google, Bing లేదా Yahoo వంటి సెర్చ్ ఇంజిన్‌లో కీవర్డ్స్ టైప్ చేయడం. మీరు ప్రశ్నలు, నిర్దిష్ట కీవర్డ్స్ మరియు ఖచ్చితమైన ఫలితాల కోసం AND, OR, మరియు కోట్స్ వంటి ఆపరేటర్లను ఉపయోగించవచ్చు.</p>
+                    <div class="features">
+                        <p><strong>Questions:</strong> Ask direct questions to get specific answers<br><strong>ప్రశ్నలు:</strong> నిర్దిష్ట సమాధానాలను పొందడానికి నేరుగా ప్రశ్నలు అడగండి</p>
+                        <p><strong>Keywords:</strong> Use specific terms related to your topic<br><strong>కీవర్డ్స్:</strong> మీ విషయానికి సంబంధించిన నిర్దిష్ట పదాలను ఉపయోగించండి</p>
+                        <p><strong>Operators:</strong> Use AND, OR, and quotes for better results<br><strong>ఆపరేటర్లు:</strong> మెరుగైన ఫలితాల కోసం AND, OR, మరియు కోట్స్ ఉపయోగించండి</p>
+                        <p><strong>Multiple Terms:</strong> Combine words for more precise searches<br><strong>బహుళ పదాలు:</strong> మరింత ఖచ్చితమైన శోధన కోసం పదాలను కలపండి</p>
+                    </div>
+                    <img src="https://static1.makeuseofimages.com/wordpress/wp-content/uploads/2017/08/advanced-online-searches.jpg" alt="Search Interface" style="margin-top: 15px;">
+                </div>
+                <div class="module-card">
+                    <img src="https://cdn.gtricks.com/2022/02/uploading-6.jpg" alt="Reverse Image Search Example">
+                    <h3>2. Search via Images (Reverse Image Search)<br>చిత్రాల ద్వారా శోధించండి (రివర్స్ ఇమేజ్ సెర్చ్)</h3>
+                    <p>With reverse image search, you upload an image or paste its link to find similar images or information. This is useful for identifying unknown objects, finding higher resolution versions, or checking if an image is fake or original.<br>
+                    రివర్స్ ఇమేజ్ సెర్చ్‌తో, మీరు ఒక చిత్రాన్ని అప్‌లోడ్ చేయవచ్చు లేదా దాని లింక్‌ను పేస్ట్ చేయవచ్చు, తద్వారా సమానమైన చిత్రాలు లేదా సమాచారం కనుగొనవచ్చు. ఇది తెలియని వస్తువులను గుర్తించడానికి, అధిక రిజల్యూషన్ వెర్షన్లను కనుగొనడానికి లేదా చిత్రం నిజమైనదా కాదా అని తనిఖీ చేయడానికి ఉపయోగపడుతుంది.</p>
+                    <div class="features">
+                        <p><strong>Google Images:</strong> Click the camera icon to upload or paste image link<br><strong>గూగుల్ ఇమేజెస్:</strong> చిత్రాన్ని అప్‌లోడ్ చేయడానికి లేదా లింక్‌ను పేస్ట్ చేయడానికి కెమెరా ఐకాన్‌పై క్లిక్ చేయండి</p>
+                        <p><strong>TinEye:</strong> Another tool for reverse image search<br><strong>TinEye:</strong> రివర్స్ ఇమేజ్ సెర్చ్ కోసం మరో సాధనం</p>
+                        <p><strong>Identify Objects:</strong> Find information about unknown items<br><strong>వస్తువులను గుర్తించండి:</strong> తెలియని వస్తువుల గురించి సమాచారం కనుగొనండి</p>
+                        <p><strong>Verify Authenticity:</strong> Check if images are original or edited<br><strong>నిజమైనదా కాదా తనిఖీ చేయండి:</strong> చిత్రాలు అసలైనవేనా లేదా ఎడిట్ చేయబడ్డవా అని తనిఖీ చేయండి</p>
+                    </div>
+                    <img src="https://i.gzn.jp/img/2024/04/26/bluesky-gif-search-2fa-link/03.png" alt="Image Recognition" style="margin-top: 15px;">
+                </div>
+                <div class="module-card">
+                    <img src="https://tse4.mm.bing.net/th?id=OIP.8C7BndnQvWESHQyKT8Yy1wHaEn&pid=Api&P=0&h=180" alt="QR and Barcode Scanning">
+                    <h3>3. Search via Scan (QR/Barcode Scanning)<br>స్కాన్ ద్వారా శోధించండి (QR/బార్కోడ్)</h3>
+                    <p>You can scan QR codes or barcodes using a smartphone to access websites or product information instantly. QR codes are found on posters, menus, and payments, while barcodes are mainly used in shopping apps to search product details or compare prices.<br>
+                    మీరు స్మార్ట్‌ఫోన్ ఉపయోగించి QR కోడ్‌లు లేదా బార్కోడ్‌లను స్కాన్ చేయవచ్చు, తద్వారా వెబ్‌సైట్లు లేదా ఉత్పత్తి సమాచారాన్ని తక్షణమే పొందవచ్చు. QR కోడ్‌లు పోస్టర్లు, మెనూలు, చెల్లింపులు మొదలైన వాటిలో కనిపిస్తాయి, బార్కోడ్‌లు ప్రధానంగా షాపింగ్ యాప్స్‌లో ఉత్పత్తి వివరాలు లేదా ధరలను పోల్చడానికి ఉపయోగిస్తారు.</p>
+                    <div class="features">
+                        <p><strong>QR Codes:</strong> Found on posters, menus, payments, etc. They often link to a website or app<br><strong>QR కోడ్‌లు:</strong> పోస్టర్లు, మెనూలు, చెల్లింపులు మొదలైన వాటిలో కనిపిస్తాయి. ఇవి తరచుగా వెబ్‌సైట్ లేదా యాప్‌కు లింక్ చేస్తాయి</p>
+                        <p><strong>Barcodes:</strong> Mainly used in shopping apps to search product details or compare prices<br><strong>బార్కోడ్‌లు:</strong> ప్రధానంగా షాపింగ్ యాప్స్‌లో ఉత్పత్తి వివరాలు లేదా ధరలను పోల్చడానికి ఉపయోగిస్తారు</p>
+                        <p><strong>Apps:</strong> Google Lens, Paytm, PhonePe, and camera apps can scan and redirect you to content<br><strong>యాప్స్:</strong> Google Lens, Paytm, PhonePe, మరియు కెమెరా యాప్స్ స్కాన్ చేసి కంటెంట్‌కు మిమ్మల్ని రీడైరెక్ట్ చేయగలవు</p>
+                        <p><strong>Instant Access:</strong> Quick way to get information without typing<br><strong>తక్షణ ప్రాప్తి:</strong> టైప్ చేయకుండా సమాచారాన్ని పొందడానికి వేగవంతమైన మార్గం</p>
+                    </div>
+                    <img src="https://tse3.mm.bing.net/th?id=OIP.rgrhpKKZ2p2UzQbgc_EIHwHaDL&pid=Api&P=0&h=180" alt="Mobile Scanning" style="margin-top: 15px;">
+                </div>
+                <div class="module-card">
+                    <img src="https://www.lifewire.com/thmb/O84Sc5rPYEeU7lrxJ2B9VQeYpnk=/3000x2000/filters:fill(auto,1)/google-search-one-website-1616499-8d2c0a70f5f8453c8482528562911aa0.png" alt="Advanced Search">
+                    <h3>4. Advanced Search Tips<br>అధునిక శోధన సూచనలు</h3>
+                    <p>Master these advanced search techniques to find information more efficiently and accurately. Use quotes for exact phrases, add site:domain.com for specific sites, use -word to exclude terms, and try filetype:pdf for specific formats.<br>
+                    ఈ అధునిక శోధన పద్ధతులను నేర్చుకుని మరింత సమర్థవంతంగా మరియు ఖచ్చితంగా సమాచారాన్ని కనుగొనండి. ఖచ్చితమైన పదబంధాల కోసం కోట్స్, నిర్దిష్ట వెబ్‌సైట్ల కోసం site:domain.com, పదాలను తొలగించడానికి -word, మరియు నిర్దిష్ట ఫార్మాట్ల కోసం filetype:pdf ఉపయోగించండి.</p>
+                    <div class="features">
+                        <p><strong>Site Search:</strong> Use "site:website.com" to search within specific websites<br><strong>సైట్ శోధన:</strong> నిర్దిష్ట వెబ్‌సైట్లో శోధించడానికి "site:website.com" ఉపయోగించండి</p>
+                        <p><strong>Exclude Terms:</strong> Use minus sign (-) to exclude unwanted words<br><strong>పదాలను తొలగించండి:</strong> అవసరం లేని పదాలను తొలగించడానికి మైనస్ (-) గుర్తు ఉపయోగించండి</p>
+                        <p><strong>File Types:</strong> Search for specific file formats like PDFs or images<br><strong>ఫైల్ రకాల:</strong> PDFs లేదా చిత్రాలు వంటి నిర్దిష్ట ఫైల్ రకాల కోసం శోధించండి</p>
+                        <p><strong>Date Range:</strong> Use "before:2023" or "after:2020" for time-specific results<br><strong>తేదీ పరిధి:</strong> నిర్దిష్ట కాలానికి ఫలితాల కోసం "before:2023" లేదా "after:2020" ఉపయోగించండి</p>
+                    </div>
+                    <img src="https://www.lifewire.com/thmb/v63yprc-MibMyBjcCGOq0HaBM1c=/3000x2000/filters:fill(auto,1)/find-people-on-the-web-3482688-Final-08ec428681574d1d95586bccaa0740b2.png" alt="Search Technology" style="margin-top: 15px;">
+                </div>
+            </div>
+            <div class="content-divider"></div>
+            <div class="intro-section" style="margin-top:0;">
+                <h3 style="text-align:center;">💡 Pro Search Tips<br>ప్రొ శోధన సూచనలు</h3>
+                <div class="modules" style="gap:18px;">
+                    <div class="module-card" style="background:linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                        <h4>🔍 Use Site Search<br>సైట్ శోధనను ఉపయోగించండి</h4>
+                        <p>Add "site:website.com" to search within a specific website. Example: "digital literacy site:edu"<br>
+                        నిర్దిష్ట వెబ్‌సైట్‌లో శోధించడానికి "site:website.com" జోడించండి. ఉదాహరణ: "digital literacy site:edu"</p>
+                    </div>
+                    <div class="module-card" style="background:linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                        <h4>📅 Search by Date<br>తేదీ ద్వారా శోధించండి</h4>
+                        <p>Use "before:2023" or "after:2020" to find content from specific time periods.<br>
+                        నిర్దిష్ట కాల వ్యవధిలోని కంటెంట్‌ను కనుగొనడానికి "before:2023" లేదా "after:2020" ఉపయోగించండి.</p>
+                    </div>
+                    <div class="module-card" style="background:linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                        <h4>❌ Exclude Terms<br>పదాలను తొలగించండి</h4>
+                        <p>Use minus sign (-) to exclude unwanted terms. Example: "python -snake"<br>
+                        అవసరం లేని పదాలను తొలగించడానికి మైనస్ (-) గుర్తు ఉపయోగించండి. ఉదాహరణ: "python -snake"</p>
+                    </div>
+                    <div class="module-card" style="background:linear-gradient(135deg, #f8f9fa, #e9ecef);">
+                        <h4>🔗 Find Related Sites<br>సంబంధిత వెబ్‌సైట్లను కనుగొనండి</h4>
+                        <p>Use "related:website.com" to find websites similar to the one you specify.<br>
+                        మీరు పేర్కొన్న వెబ్‌సైట్‌కు సమానమైన వెబ్‌సైట్లను కనుగొనడానికి "related:website.com" ఉపయోగించండి.</p>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="InternetNavigation.html" class="back-button">
+                    ← Back to Internet Navigation
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

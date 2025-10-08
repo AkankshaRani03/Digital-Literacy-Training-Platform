@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Navigate the Internet - Digital Literacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .main-heading {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://tse4.mm.bing.net/th?id=OIP.kbKnsLWu71e4ndfosf7c_wHaEo&pid=Api&P=0&h=180');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-heading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+        }
+
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .intro-section::before {
+            content: '🌐';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .modules {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .module-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .module-card h3 {
+            margin: 20px 0 15px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .module-card p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .module-card .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .module-card .features p {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .content-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            margin: 40px 0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .content-divider::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .main-heading {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            
+            .main-heading .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .main-heading h1 {
+                margin-left: 100px;
+            }
+            
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            
+            .modules {
+                flex-direction: column;
+            }
+            
+            .module-card {
+                padding: 25px;
+            }
+            
+            .module-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .module-card p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .modules {
+                flex-direction: column;
+            }
+        }
+
+        .horizontal-cards {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin: 20px 0 0 0;
+            flex-wrap: wrap;
+        }
+        .mini-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.07);
+            padding: 18px 16px;
+            text-align: center;
+            width: 170px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: box-shadow 0.2s;
+        }
+        .mini-card img {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 10px;
+        }
+        .mini-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 6px;
+            font-size: 1.1rem;
+        }
+        .mini-desc {
+            font-size: 0.98rem;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+        .mini-card a {
+            text-decoration: none;
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-top: 4px;
+        }
+        .mini-card a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 900px) {
+            .horizontal-cards {
+                flex-direction: column;
+                align-items: center;
+            }
+            .mini-card {
+                width: 90%;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Navigate the Internet<br>ఇంటర్నెట్‌ని నావిగేట్ చేయండి</h1>
+            </div>
+            
+            <div class="intro-section">
+                <p class="intro-text">
+                    Learn the essential techniques to explore the internet confidently. Master the fundamentals of web browsing including URLs, navigation, and browser features.<br>
+                    ఇంటర్నెట్‌ని నమ్మకంగా అన్వేషించడానికి అవసరమైన ముఖ్యమైన పద్ధతులను నేర్చుకోండి. URLలు, నావిగేషన్ మరియు బ్రౌసర్ ఫీచర్లతో సహా వెబ్ బ్రౌసింగ్ యొక్క ప్రాథమికాలను నేర్చుకోండి.
+                </p>
+            </div>
+
+            <div class="content-divider"></div>
+
+            <div class="modules">
+                <!-- Search Engines Horizontal Cards -->
+                <div class="module-card">
+                    <h3>Use of Search Engines<br>సెర్చ్ ఇంజిన్ల ఉపయోగం</h3>
+                    <p>Search engines help you find information on the web by typing keywords or questions.<br>
+                    సెర్చ్ ఇంజిన్లు కీవర్డ్లు లేదా ప్రశ్నలను టైప్ చేయడం ద్వారా వెబ్‌లో సమాచారాన్ని కనుగొనడంలో సహాయపడతాయి.</p>
+                    <div class="horizontal-cards">
+                        <div class="mini-card">
+                            <img src="https://images.unsplash.com/photo-1678483789109-023aeb636fcb?q=80&w=1228&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Google Logo">
+                            <div class="mini-title">Google</div>
+                            <div class="mini-desc">Most popular search engine for web, images, maps, and more.<br>వెబ్, చిత్రాలు, మ్యాప్స్ మరియు మరిన్ని కోసం అత్యంత ప్రజాదరణ పొందిన సెర్చ్ ఇంజిన్.</div>
+                            <a href="https://www.google.com" target="_blank">Visit</a>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://www.bing.com/sa/simg/bing_p_rr_teal_min.ico" alt="Bing Logo" style="width:48px;height:48px;">
+                            <div class="mini-title">Bing</div>
+                            <div class="mini-desc">Microsoft's search engine with rewards and news features.<br>రివార్డ్స్ మరియు వార్తల ఫీచర్లతో మైక్రోసాఫ్ట్ సెర్చ్ ఇంజిన్.</div>
+                            <a href="https://www.bing.com" target="_blank">Visit</a>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://duckduckgo.com/assets/logo_header.v108.png" alt="DuckDuckGo Logo" style="width:48px;height:48px;">
+                            <div class="mini-title">DuckDuckGo</div>
+                            <div class="mini-desc">Privacy-focused search engine that doesn't track you.<br>మీ గోప్యతపై దృష్టి పెట్టే సెర్చ్ ఇంజిన్, వినియోగదారులను ట్రాక్ చేయదు.</div>
+                            <a href="https://www.duckduckgo.com" target="_blank">Visit</a>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://plus.unsplash.com/premium_photo-1737073520175-b3303a6e1e76?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Ecosia Logo" style="width:48px;height:48px;">
+                            <div class="mini-title">Ecosia</div>
+                            <div class="mini-desc">Eco-friendly search engine that plants trees with its ad revenue.<br>ప్రతి శోధనతో చెట్లు నాటే పర్యావరణ అనుకూల సెర్చ్ ఇంజిన్.</div>
+                            <a href="https://www.ecosia.org" target="_blank">Visit</a>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://tse2.mm.bing.net/th?id=OIP.b5u07QGwy_jnTzRYaJZNpgHaHa&pid=Api&P=0&h=180" alt="AOL Logo" style="width:48px;height:48px;">
+                            <div class="mini-title">AOL</div>
+                            <div class="mini-desc">One of the oldest search engines, still providing web and news search.<br>పురాతన సెర్చ్ ఇంజిన్లలో ఒకటి, ఇంకా వెబ్ మరియు వార్తల శోధనను అందిస్తుంది.</div>
+                            <a href="https://search.aol.com" target="_blank">Visit</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Typing a URL Horizontal Cards -->
+                <div class="module-card">
+                    <h3>Typing a URL<br>URLని టైప్ చేయడం</h3>
+                    <p>A URL (Uniform Resource Locator) is the address of a webpage on the internet.<br>
+                    URL (యూనిఫార్మ్ రిసోర్స్ లొకేటర్) అనేది ఇంటర్నెట్‌లో వెబ్‌పేజీ యొక్క చిరునామా.</p>
+                    <div class="horizontal-cards">
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" alt="Protocol Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">Protocol</div>
+                            <div class="mini-desc">(https://) – Secure communication between browser and website.<br>(https://) – బ్రౌజర్ మరియు వెబ్‌సైట్ మధ్య సురక్షిత కమ్యూనికేషన్.</div>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/483/483361.png" alt="Domain Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">Domain</div>
+                            <div class="mini-desc">(www.example.com) – The website's unique name.<br>(www.example.com) – వెబ్‌సైట్ యొక్క ప్రత్యేక పేరు.</div>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Path Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">Path</div>
+                            <div class="mini-desc">(/page1) – The specific page or resource on the website.<br>(/page1) – వెబ్‌సైట్‌లోని నిర్దిష్ట పేజీ లేదా వనరు.</div>
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:20px;">
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.xjKR2ycjayieMrvGF0opOAHaE1&pid=Api&P=0&h=180" alt="URL Example" style="max-width:320px;width:100%;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.08);">
+                    </div>
+                </div>
+                <!-- Following Links Horizontal Cards -->
+                <div class="module-card">
+                    <h3>Following Links<br>లింక్‌లను అనుసరించడం</h3>
+                    <p>Links are clickable connections that take you from one page to another.<br>
+                    లింక్‌లు క్లిక్ చేయదగిన కనెక్షన్లు, ఇవి మిమ్మల్ని ఒక పేజీ నుండి మరొక పేజీకి తీసుకువెళుతాయి.</p>
+                    <div class="horizontal-cards">
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/25/25694.png" alt="Internal Link Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">Internal Link</div>
+                            <div class="mini-desc">Points to another page within the same website.<br>అదే వెబ్‌సైట్‌లోని మరొక పేజీకి సూచిస్తుంది.</div>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/545/545682.png" alt="External Link Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">External Link</div>
+                            <div class="mini-desc">Takes you to a different website.<br>వేరే వెబ్‌సైట్‌కు తీసుకువెళుతుంది.</div>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/483/483361.png" alt="Backlink Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">Backlink</div>
+                            <div class="mini-desc">A link from another website pointing to yours (important for SEO).<br>మీ వెబ్‌సైట్‌కి సూచించే ఇతర వెబ్‌సైట్ల నుండి లింక్ (SEO కోసం ముఖ్యమైనది).</div>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/709/709496.png" alt="Do-Follow Icon" style="width:48px;height:48px;">
+                            <div class="mini-title">Do-Follow Link</div>
+                            <div class="mini-desc">Allows search engines to follow and index the link for SEO benefit.<br>SEO ప్రయోజనం కోసం సెర్చ్ ఇంజిన్లు లింక్‌ను అనుసరించి ఇండెక్స్ చేయడానికి అనుమతిస్తుంది.</div>
+                        </div>
+                        <div class="mini-card">
+                            <img src="https://cdn-icons-png.flaticon.com/512/709/709496.png" alt="No-Follow Icon" style="width:48px;height:48px;filter:grayscale(1);">
+                            <div class="mini-title">No-Follow Link</div>
+                            <div class="mini-desc">Tells search engines not to follow or index the link (often used in ads/comments).<br>సెర్చ్ ఇంజిన్లకు లింక్‌ను అనుసరించవద్దని చెప్పే లింక్ (ప్రకటనలు/వ్యాఖ్యలలో తరచుగా ఉపయోగిస్తారు).</div>
+                        </div>
+                   
+            </div>
+
+            <div style="text-align: center;">
+                <a href="InternetNavigation.html" class="back-button">← Back to Internet Navigation</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

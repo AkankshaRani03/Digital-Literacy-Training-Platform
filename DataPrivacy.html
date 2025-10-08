@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Data Privacy | Digital Literacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            background: rgba(255,255,255,0.97);
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(44,62,80,0.13);
+            padding: 40px 24px 32px 24px;
+            position: relative;
+            z-index: 2;
+        }
+        .main-heading {
+            position: relative;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)),
+                        url('https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+            background: #fff;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 0;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .intro-text {
+            text-align: center;
+            font-size: 1.18rem;
+            color: #444;
+            margin-bottom: 38px;
+            font-weight: 500;
+        }
+        .modules-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .module-card {
+            background: #f7f8fa;
+            border-radius: 20px;
+            box-shadow: 0 6px 24px rgba(44,62,80,0.09);
+            padding: 28px 32px 22px 32px;
+            width: 100%;
+            height: 100%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .module-card:hover {
+            transform: translateY(-6px) scale(1.025);
+            box-shadow: 0 16px 40px rgba(44,62,80,0.13);
+        }
+        .image-row {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .image-row img {
+            width: 50%;
+            max-width: 180px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(44,62,80,0.10);
+        }
+        .module-card h3 {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .module-card p {
+            font-size: 1.05rem;
+            color: #444;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .module-card ul {
+            margin: 0 0 10px 0;
+            padding-left: 18px;
+            color: #555;
+            font-size: 0.98rem;
+            text-align: left;
+        }
+        .module-card ul li {
+            margin-bottom: 6px;
+        }
+        .highlight-section {
+            background: linear-gradient(135deg, #1976d2, #9c27b0);
+            color: white;
+            border-radius: 25px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .highlight-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .highlight-content {
+            position: relative;
+            z-index: 2;
+        }
+        .highlight-title {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+        .highlight-text {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            margin-top: 18px;
+            box-shadow: 0 6px 18px rgba(102,126,234,0.18);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-button:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px) scale(1.03);
+        }
+        @media (max-width: 900px) {
+            .modules-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .container {
+                padding: 18px 4vw 18px 4vw;
+            }
+            .module-card {
+                width: 98vw;
+                max-width: 98vw;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-heading h1 {
+                font-size: 1.3rem;
+            }
+            .module-card {
+                width: 98vw;
+                max-width: 340px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Data Privacy<br>డేటా గోప్యత</h1>
+            </div>
+            <p class="intro-text">
+                Data privacy means protecting your personal information from being misused. Learning how cookies work and using privacy settings properly helps you stay safe online.<br>
+                డేటా గోప్యత అనేది మీ వ్యక్తిగత సమాచారాన్ని దుర్వినియోగం కాకుండా రక్షించుకోవడం. కుకీలు ఎలా పనిచేస్తాయో తెలుసుకోవడం మరియు గోప్యతా సెట్టింగ్స్‌ను సరిగ్గా ఉపయోగించడం ద్వారా మీరు ఆన్‌లైన్‌లో సురక్షితంగా ఉండవచ్చు.
+            </p>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://images.ctfassets.net/23aumh6u8s0i/3TRYElMxIaNLqt7rXCrAG7/29560e70503c861cfe85632ecac78d03/privacy" alt="Cookies">
+                        <img src="https://kingpinbrowser.com/wp-content/uploads/types-of-internet-cookies.jpg" alt="Cookie Privacy">
+                    </div>
+                    <h3>Cookies<br>కుకీలు</h3>
+                    <p>Cookies are small files stored on your device by websites. They help remember your preferences, login info, and browsing habits.<br>
+                    కుకీలు అనేవి వెబ్‌సైట్లు మీ పరికరంలో నిల్వ చేసే చిన్న ఫైళ్ళు. ఇవి మీ అభిరుచులు, లాగిన్ సమాచారం, బ్రౌజింగ్ అలవాట్లను గుర్తుంచడంలో సహాయపడతాయి.</p>
+                    <ul>
+                        <li>Cookies make websites load faster by remembering previous actions.<br>కుకీలు గత చర్యలను గుర్తుంచడం ద్వారా వెబ్‌సైట్లు వేగంగా లోడ్ అవుతాయి.</li>
+                        <li>They can track browsing behavior to show personalized ads.<br>ఇవి వ్యక్తిగతీకరించిన ప్రకటనలు చూపించడానికి బ్రౌజింగ్ ప్రవర్తనను ట్రాక్ చేయవచ్చు.</li>
+                        <li>Some cookies are essential; others can be blocked for privacy.<br>కొన్ని కుకీలు అవసరం; మరికొన్ని గోప్యత కోసం నిరోధించవచ్చు.</li>
+                    </ul>
+                    <p style="font-weight: bold; color: #1976d2; margin: 20px 0 15px 0;">How to control them:<br>వాటిని ఎలా నియంత్రించాలి:</p>
+                    <ul>
+                        <li>Clear browser cookies regularly from settings.<br>సెట్టింగ్స్‌లో నుండి బ్రౌజర్ కుకీలను తరచుగా క్లియర్ చేయండి.</li>
+                        <li>Use browser options to block third-party cookies.<br>మూడవ పక్ష కుకీలను నిరోధించడానికి బ్రౌజర్ ఎంపికలను ఉపయోగించండి.</li>
+                        <li>Always read cookie consent messages on websites before accepting.<br>అంగీకరించే ముందు వెబ్‌సైట్లలోని కుకీ అంగీకార సందేశాలను ఎప్పుడూ చదవండి.</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.AX5PoxZrvP0MUDVs1kPK5AHaEJ&pid=Api&P=0&h=180" alt="Privacy Settings">
+                        <img src="https://c8.alamy.com/comp/HEEBA2/permission-privacy-protection-security-concept-HEEBA2.jpg" alt="Privacy Mobile">
+                    </div>
+                    <h3>Privacy Settings<br>గోప్యతా సెట్టింగ్స్</h3>
+                    <p>Privacy settings help you control what information apps and websites can access. Adjust them to stay secure and avoid oversharing.<br>
+                    గోప్యతా సెట్టింగ్స్ అనేవి యాప్‌లు మరియు వెబ్‌సైట్లు ఏ సమాచారం యాక్సెస్ చేయగలవో నియంత్రించడంలో మీకు సహాయపడతాయి. అవి సురక్షితంగా ఉండటానికి మరియు అధికంగా పంచుకోవడం నివారించడానికి సర్దుబాటు చేయండి.</p>
+                    <ul>
+                        <li><strong>Two-Factor Authentication (2FA):</strong> Adds an extra layer of security using your phone or email to verify login.<br><strong>రెండు-దశల ధృవీకరణ (2FA):</strong> లాగిన్‌ను ధృవీకరించడానికి మీ ఫోన్ లేదా ఇమెయిల్‌ను ఉపయోగించి అదనపు భద్రతను అందిస్తుంది.</li>
+                        <li><strong>Browsing History:</strong> Can be used for tracking; regularly clear history or use Incognito mode.<br><strong>బ్రౌజింగ్ చరిత్ర:</strong> ట్రాకింగ్ కోసం ఉపయోగించవచ్చు; చరిత్రను తరచుగా క్లియర్ చేయండి లేదా ఇన్కోగ్నిటో మోడ్ ఉపయోగించండి.</li>
+                        <li><strong>Location Sharing:</strong> Disable location access when not needed.<br><strong>లోకేషన్ షేరింగ్:</strong> అవసరం లేనప్పుడు లోకేషన్ యాక్సెస్‌ను నిలిపివేయండి.</li>
+                        <li><strong>Microphone & Camera Access:</strong> Allow access only to trusted apps or websites.<br><strong>మైక్రోఫోన్ & కెమెరా యాక్సెస్:</strong> నమ్మదగిన యాప్‌లు లేదా వెబ్‌సైట్లకు మాత్రమే యాక్సెస్ అనుమతించండి.</li>
+                    </ul>
+                    <p style="font-weight: bold; color: #1976d2; margin: 20px 0 15px 0;">Tips to Protect Your Privacy:<br>మీ గోప్యతను రక్షించడానికి సూచనలు:</p>
+                    <ul>
+                        <li>Review privacy settings in your apps and social media regularly.<br>మీ యాప్‌లు మరియు సోషల్ మీడియాలో గోప్యతా సెట్టింగ్స్‌ను తరచుగా సమీక్షించండి.</li>
+                        <li>Limit the amount of personal info shared online.<br>ఆన్‌లైన్‌లో పంచుకునే వ్యక్తిగత సమాచారం పరిమితం చేయండి.</li>
+                        <li>Use private browsing modes when researching sensitive topics.<br>సున్నితమైన విషయాలను పరిశోధించేటప్పుడు ప్రైవేట్ బ్రౌజింగ్ మోడ్‌లను ఉపయోగించండి.</li>
+                        <li>Keep software and apps updated for security fixes.<br>భద్రతా పరిష్కారాల కోసం సాఫ్ట్‌వేర్ మరియు యాప్‌లను నవీకరించండి.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="highlight-section">
+                <div class="highlight-content">
+                    <h3 class="highlight-title">💡 Privacy Best Practices<br>గోప్యతా ఉత్తమ పద్ధతులు</h3>
+                    <p class="highlight-text">Remember to regularly review your privacy settings, be cautious about what information you share online, and always read the fine print before accepting cookies or permissions. Your digital privacy is worth protecting!<br>
+                    మీ గోప్యతా సెట్టింగ్స్‌ను తరచుగా సమీక్షించండి, ఆన్‌లైన్‌లో మీరు పంచుకునే సమాచారంపై జాగ్రత్త వహించండి, మరియు కుకీలు లేదా అనుమతులను అంగీకరించే ముందు ఎప్పుడూ వివరాలను చదవండి. మీ డిజిటల్ గోప్యతను రక్షించుకోవడం చాలా ముఖ్యం!</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="OnlineSafety.html" class="back-button">← Back to Online Safety</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

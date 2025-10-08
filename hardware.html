@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hardware Components - Digital Literacy Training Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header-section {
+            text-align: center;
+            color: #1681ec;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1738347826166-47989060ac57?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+        }
+
+        .header-section .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .header-section h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-text {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+            font-size: 1.2rem;
+            color: #2c3e50;
+            text-align: center;
+        }
+
+        .intro-text::before {
+            content: '🔧';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover::before {
+            transform: scaleX(1);
+        }
+
+        .section-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: bold;
+            margin-right: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 30px 0 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #34495e;
+            margin: 20px 0;
+        }
+
+        ul {
+            padding-left: 25px;
+            margin: 20px 0;
+        }
+
+        li {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #34495e;
+            margin: 10px 0;
+        }
+
+        strong {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .image-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .image-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .content-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            margin: 40px 0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .content-divider::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .header-section {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            
+            .header-section .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .header-section h1 {
+                margin-left: 100px;
+            }
+            
+            h2 {
+                font-size: 1.6rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .component-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .component-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .component-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .component-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .component-item h3, .component-item h4 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 15px 0 10px;
+        }
+
+        .component-item h4 {
+            font-size: 1.2rem;
+        }
+
+        .component-item p {
+            font-size: 1rem;
+            color: #34495e;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .component-item ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        .component-item li {
+            font-size: 0.95rem;
+            color: #34495e;
+            margin: 8px 0;
+        }
+
+        .peripheral-categories h3 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin: 40px 0 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="header-section">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Hardware Components</h1>
+            </div>
+            
+            <div class="intro-text">
+                This module introduces key hardware components, external peripherals, and simple troubleshooting techniques every computer user should know.
+                <br>ఈ మాడ్యూల్ ప్రతి కంప్యూటర్ వినియోగదారుడు తెలుసుకోవలసిన కీలకమైన హార్డ్‌వేర్ భాగాలు, బాహ్య పరిధీయ పరికరాలు మరియు సరళమైన ట్రబుల్షూటింగ్ పద్ధతులను పరిచయం చేస్తుంది.
+            </div>
+
+            <div class="content-divider"></div>
+
+            <!-- Topic 1: Computer Components -->
+            <div class="content-section">
+                <h2><span class="section-number">1</span>Computer Components కంప్యూటర్ భాగాలు</h2>
+                <p>These are the core internal parts that make a computer function <br>కంప్యూటర్ పనిచేయడానికి ఇవి ప్రధాన అంతర్గత భాగాలు::</p>
+                
+                <div class="component-grid">
+                    <div class="component-item">
+                        <img src="https://plus.unsplash.com/premium_photo-1726869681528-75a146b1e197?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="CPU">
+                        <h3>CPU (Central Processing Unit) CPU (సెంట్రల్ ప్రాసెసింగ్ యూనిట్)</h3>
+                        <p>The brain of the computer that processes data and executes instructions. It performs calculations, manages data flow, and coordinates all other components.
+                            <br>డేటాను ప్రాసెస్ చేసే మరియు సూచనలను అమలు చేసే కంప్యూటర్ యొక్క మెదడు. ఇది గణనలను నిర్వహిస్తుంది, డేటా ప్రవాహాన్ని నిర్వహిస్తుంది మరియు అన్ని ఇతర భాగాలను సమన్వయం చేస్తుంది.</p>    
+                        </p>
+                        <ul>
+                            <li>Processes billions of calculations per second <br>సెకనుకు బిలియన్లు గణనలను ప్రాసెస్ చేస్తుంది</li>
+                            <li>Controls all computer operations <br>అన్ని కంప్యూటర్ పనిలను నిర్వహిస్తుంది</li>
+                            <li>Determines overall system performance <br>మొత్తం సిస్టమ్ పరఫార్మన్స్ నిర్ణయించుకోవడం</li>
+                        </ul>
+                    </div>
+
+                    <div class="component-item">
+                        <img src="https://images.unsplash.com/photo-1601192711507-e21a1e78e549?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="RAM">
+                        <h3>RAM (ఆర్ ఎ ఎమ్) ROM (ఆర్ ఓ ఎం)</h3>
+                        <p>Temporary memory used for running programs and storing data that the CPU needs to access quickly. Data is lost when computer is turned off. 
+                             <br>CPU త్వరగా యాక్సెస్ చేయడానికి అవసరమైన ప్రోగ్రామ్‌లను అమలు చేయడానికి మరియు డేటాను నిల్వ చేయడానికి ఉపయోగించే తాత్కాలిక మెమరీ. కంప్యూటర్ ఆఫ్ చేయబడినప్పుడు డేటా కోలుపడుతుంది.
+
+                        </p>
+                        <ul>
+                            <li>Stores active programs and data <br>ప్రోగ్రామ్‌లను మరియు డేటాను నిల్వ చేస్తుంది</li>
+                            <li>Much faster than hard drive storage <br>హార్డ్ డ్రైవ్ స్టోరేజ్ కంటే చాలా వేగంగా</li>
+                            <li>Measured in gigabytes (GB) <br>గిగాబైట్లలో కొలవబడుతుంది</li>
+                        </ul>
+                    </div>
+
+                    <div class="component-item">
+                        <img src="https://images.unsplash.com/photo-1672689956124-18666b4cdae4?q=80&w=1073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Storage">
+                        <h3>Storage Drives (HDD/SSD) స్టోరేజ్ డ్రైవ్స్ (HDD/SSD)</h3>
+                        <p>Permanent storage devices that hold your operating system, programs, files, and data even when the computer is turned off.
+                            <br>కంప్యూటర్ ఆఫ్ చేయబడినప్పుడు మరియు ఆఫ్ చేయబడినప్పుడు మీ ఆపరేటింగ్ సిస్టమ్, ప్రోగ్రామ్‌లు, ఫైల్స్ మరియు డేటాను నిల్వ చేస్తుంది.
+                        </p>
+                        <ul>
+                            <li>HDD: Traditional spinning disk storage <br>హార్డ్ డ్రైవ్: ప్రాచీన స్పిన్ డిస్క్ స్టోరేజ్</li>
+                            <li>SSD: Faster solid-state storage <br>స్టాటిక్ స్టేట్ స్టోరేజ్: వేగంగా స్టాటిక్ స్టేట్ స్టోరేజ్</li>
+                            <li>Measured in terabytes (TB) <br>టెరాబైట్లలో కొలవబడుతుంది</li>
+                        </ul>
+                    </div>
+
+                    <div class="component-item">
+                        <img src="https://images.unsplash.com/photo-1697918768523-8f3e14472257?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Motherboard">
+                        <h3>Motherboard మోటర్ బోర్డ్</h3>
+                        <p>The main circuit board that connects all components and allows communication between them. It houses the CPU, RAM, and other essential parts.
+                            <br>అన్ని భాగాలను కనెక్ట్ చేస్తుంది మరియు అవి మధ్య సంప్రదాయాన్ని అనుమతిస్తుంది. ఇది క్యూప్, రాండమ్ ఆస్క్ మరియు ఇతర ప్రధాన భాగాలను కలిగి ఉంటుంది.
+                        </p>
+                        <ul>
+                            <li>Connects all hardware components <br>అన్ని హార్డ్వేర్ భాగాలను కనెక్ట్ చేస్తుంది</li>
+                            <li>Contains expansion slots <br>విస్తరణ స్లాట్‌లను కలిగి ఉంటుంది</li>
+                            <li>Manages data flow between parts <br>భాగాల మధ్య డేటా ప్రవాహాన్ని నిర్వహిస్తుంది</li>
+                        </ul>
+                    </div>
+
+                    <div class="component-item">
+                        <img src="https://plus.unsplash.com/premium_photo-1743618985986-d5e1df43f4bc?q=80&w=784&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Power Supply">
+                        <h3>Power Supply Unit (PSU) పవర్ సప్లై యూనిట్ (PSU)</h3>
+                        <p>Converts electrical power from the wall outlet into the correct voltage and current needed by computer components.
+                            <br>గోడ అవుట్‌లెట్ నుండి విద్యుత్ శక్తిని కంప్యూటర్ భాగాలకు అవసరమైన సరైన వోల్టేజ్ మరియు కరెంట్‌గా మారుస్తుంది.</p>
+                        <ul>
+                            <li>Provides stable power to all components <br>అన్ని భాగాలకు స్థిరమైన శక్తిని అందిస్తుంది</li>
+                            <li>Measured in watts (W) <br>వాట్స్ (W) లో కొలుస్తారు</li>
+                            <li>Essential for system stability <br>వ్యవస్థ స్థిరత్వానికి అవసరం</li>
+                        </ul>
+                    </div>
+
+                    <div class="component-item">
+                        <img src="https://images.unsplash.com/photo-1634126592031-5668977339c2?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Graphics Card">
+                        <h3>Graphics Card (GPU) గ్రాఫిక్స్ కార్డ్ (GPU)</h3>
+                        <p>Handles all visual output and graphics processing. Essential for gaming, video editing, and graphic design.
+                            <br>అన్ని విజువల్ అవుట్‌పుట్ మరియు గ్రాఫిక్స్ ప్రాసెసింగ్‌ను నిర్వహిస్తుంది. గేమింగ్, వీడియో ఎడిటింగ్ మరియు గ్రాఫిక్ డిజైన్‌కు ఇది చాలా అవసరం.</p>
+                        <ul>
+                            <li>Processes graphics and video <br>గ్రాఫిక్స్ మరియు వీడియో ప్రక్రియలు</li>
+                            <li>Connects to monitor/display <br>మానిటర్/డిస్ప్లేకు కనెక్ట్ అవుతుంది</li>
+                            <li>Can be integrated or dedicated <br>ఇంటిగ్రేట్ చేయవచ్చు లేదా అంకితం చేయవచ్చు</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 2: Peripherals -->
+            <div class="content-section">
+                <h2><span class="section-number">2</span>Peripherals పరిధీయ పరికరాలు</h2>
+                <p>Peripherals are external devices connected to a computer that provide input, output, or storage capabilities:
+                    <br>పరిధీయ పరికరాలు కంప్యూటర్‌కు కనెక్ట్ చేయబడిన బాహ్య పరికరాలు, ఇవి ఇన్పుట్, అవుట్‌పుట్ లేదా స్టోరేజ్ సామర్థ్యాలను అందిస్తాయి:</p>
+                
+                <div class="peripheral-categories">
+                    <h3>Input Devices ఇన్పుట్ పరికరాలు</h3>
+                    <div class="component-grid">
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1541140532154-b024d705b90a?q=80&w=1216&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Keyboard">
+                            <h4>Keyboard కీబోర్డ్</h4>
+                            <p>Primary input device for typing text and entering commands. Available in various layouts and designs.
+                                <br>టెక్స్ట్ టైప్ చేయడానికి మరియు కమాండ్‌లను నమోదు చేయడానికి ప్రధాన ఇన్పుట్ పరికరం. వివిధ లేఅవుట్‌లు మరియు డిజైన్‌లలో అందుబాటులో ఉంది.</p>
+                            <ul>
+                                <li>QWERTY layout most common <br>QWERTY లేఅవుట్ చాలా సాధారణం</li>
+                                <li>Mechanical and membrane types <br>మెకానికల్ మరియు మెంబ్రేన్ రకాలు</li>
+                                <li>Wireless and wired options <br>వైర్‌లెస్ మరియు వైర్డ్ ఎంపికలు</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Mouse">
+                            <h4>Mouse మౌస్</h4>
+                            <p>Pointing device that controls cursor movement on screen. Essential for graphical user interfaces.
+                                <br>స్క్రీన్‌పై కర్సర్ కదలికను నియంత్రించే పాయింటింగ్ పరికరం. గ్రాఫికల్ యూజర్ ఇంటర్‌ఫేస్‌లకు ఇది చాలా అవసరం.</p>
+                            <ul>
+                                <li>Optical and laser sensors <br>ఆప్టికల్ మరియు లేజర్ సెన్సార్లు</li>
+                                <li>Left and right click buttons <br>ఎడమ మరియు కుడి క్లిక్ బటన్లు</li>
+                                <li>Scroll wheel for navigation <br>నావిగేషన్ కోసం స్క్రోల్ వీల్</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1629429407756-446d66f5b24e?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Webcam">
+                            <h4>Webcam వెబ్‌క్యామ్</h4>
+                            <p>Digital camera for video conferencing, streaming, and capturing images. Built into most laptops.
+                                <br>వీడియో కాన్ఫరెన్సింగ్, స్ట్రీమింగ్ మరియు చిత్రాలను క్యాప్చర్ చేయడానికి డిజిటల్ కెమెరా. చాలా ల్యాప్‌టాప్‌లలో అంతర్గతంగా ఉంటుంది.</p>
+                            <ul>
+                                <li>HD and 4K resolution options <br>HD మరియు 4K రిజల్యూషన్ ఎంపికలు</li>
+                                <li>Built-in microphones <br>అంతర్గత మైక్రోఫోన్లు</li>
+                                <li>Auto-focus capabilities <br>ఆటో-ఫోకస్ సామర్థ్యాలు</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1612815154858-60aa4c59eaa6?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Scanner">
+                            <h4>Scanner స్కానర్</h4>
+                            <p>Converts physical documents and images into digital format. Useful for digitizing paperwork.
+                                <br>భౌతిక పత్రాలు మరియు చిత్రాలను డిజిటల్ ఫార్మాట్‌గా మార్చుతుంది. పత్రాలను డిజిటైజ్ చేయడానికి ఉపయోగపడుతుంది.</p>
+                            <ul>
+                                <li>Flatbed and sheet-fed types <br>ఫ్లాట్‌బెడ్ మరియు షీట్-ఫెడ్ రకాలు</li>
+                                <li>High resolution scanning <br>అధిక రిజల్యూషన్ స్కానింగ్</li>
+                                <li>OCR text recognition <br>OCR టెక్స్ట్ గుర్తింపు</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Output Devices అవుట్‌పుట్ పరికరాలు</h3>
+                    <div class="component-grid">
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1614624532983-4ce03382d63d?q=80&w=1331&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Monitor">
+                            <h4>Monitor/Display మానిటర్/డిస్ప్లే</h4>
+                            <p>Primary output device that displays visual information from the computer. Available in various sizes and resolutions.
+                                <br>కంప్యూటర్ నుండి విజువల్ సమాచారాన్ని ప్రదర్శించే ప్రధాన అవుట్‌పుట్ పరికరం. వివిధ పరిమాణాలు మరియు రిజల్యూషన్‌లలో అందుబాటులో ఉంది.</p>
+                            <ul>
+                                <li>LCD, LED, and OLED technologies <br>LCD, LED, మరియు OLED టెక్నాలజీలు</li>
+                                <li>HD, Full HD, and 4K resolutions <br>HD, Full HD, మరియు 4K రిజల్యూషన్‌లు</li>
+                                <li>Various screen sizes (15" to 32"+) <br>వివిధ స్క్రీన్ పరిమాణాలు (15" నుండి 32"+ వరకు)</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1650094980833-7373de26feb6?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3DD" alt="Printer">
+                            <h4>Printer ప్రింటర్</h4>
+                            <p>Output device that produces hard copies of digital documents and images on paper.
+                                <br>డిజిటల్ పత్రాలు మరియు చిత్రాల యొక్క హార్డ్ కాపీలను కాగితంపై ఉత్పత్తి చేసే అవుట్‌పుట్ పరికరం.</p>
+                            <ul>
+                                <li>Inkjet and laser printers <br>ఇంక్‌జెట్ మరియు లేజర్ ప్రింటర్లు</li>
+                                <li>Color and monochrome options <br>రంగు మరియు మోనోక్రోమ్ ఎంపికలు</li>
+                                <li>All-in-one with scanning <br>స్కానింగ్‌తో కూడిన ఆల్-ఇన్-వన్</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1609702847389-b8aec1b0b929?q=80&w=1263&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Speakers">
+                            <h4>Speakers స్పీకర్లు</h4>
+                            <p>Audio output devices that produce sound from the computer. Range from basic to high-end audio systems.
+                                <br>కంప్యూటర్ నుండి ధ్వనిని ఉత్పత్తి చేసే ఆడియో అవుట్‌పుట్ పరికరాలు. ప్రాథమిక నుండి అధిక-ఎండ్ ఆడియో వ్యవస్థల వరకు ఉంటాయి.</p>
+                            <ul>
+                                <li>2.1, 5.1, and 7.1 configurations <br>2.1, 5.1, మరియు 7.1 కాన్ఫిగరేషన్లు</li>
+                                <li>Built-in and external options <br>అంతర్గత మరియు బాహ్య ఎంపికలు</li>
+                                <li>Bluetooth connectivity <br>బ్లూటూత్ కనెక్టివిటీ</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Headphones">
+                            <h4>Headphones హెడ్‌ఫోన్లు</h4>
+                            <p>Personal audio output device worn on or around the ears. Provides private listening experience.
+                                <br>చెవులపై లేదా చుట్టూ ధరించే వ్యక్తిగత ఆడియో అవుట్‌పుట్ పరికరం. ప్రైవేట్ వినడం అనుభవాన్ని అందిస్తుంది.</p>
+                            <ul>
+                                <li>Over-ear and in-ear designs <br>ఓవర్-ఎర్ మరియు ఇన్-ఎర్ డిజైన్లు</li>
+                                <li>Wired and wireless options <br>వైర్డ్ మరియు వైర్‌లెస్ ఎంపికలు</li>
+                                <li>Noise-canceling features <br>నాయిస్-కాన్సిలింగ్ లక్షణాలు</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h3>Storage Devices స్టోరేజ్ పరికరాలు</h3>
+                    <div class="component-grid">
+                        <div class="component-item">
+                            <img src="https://plus.unsplash.com/premium_photo-1726837308560-cb371e1cbb16?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="USB Drive">
+                            <h4>USB Flash Drives USB ఫ్లాష్ డ్రైవ్లు</h4>
+                            <p>Portable storage devices that connect via USB ports. Used for data transfer and backup.
+                                <br>USB పోర్ట్‌ల ద్వారా కనెక్ట్ అయ్యే పోర్టబుల్ స్టోరేజ్ పరికరాలు. డేటా బదిలీ మరియు బ్యాకప్ కోసం ఉపయోగించబడతాయి.</p>
+                            <ul>
+                                <li>8GB to 2TB capacities <br>8GB నుండి 2TB సామర్థ్యాలు</li>
+                                <li>USB 2.0 and 3.0 speeds <br>USB 2.0 మరియు 3.0 వేగాలు</li>
+                                <li>Plug-and-play functionality <br>ప్లగ్-అండ్-ప్లే ఫంక్షనాలిటీ</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1627486144847-03f8c678f90d?q=80&w=1176&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="External Hard Drive">
+                            <h4>External Hard Drives బాహ్య హార్డ్ డ్రైవ్లు</h4>
+                            <p>Portable storage devices with large capacities. Used for backup and additional storage.
+                                <br>పెద్ద సామర్థ్యాలతో కూడిన పోర్టబుల్ స్టోరేజ్ పరికరాలు. బ్యాకప్ మరియు అదనపు స్టోరేజ్ కోసం ఉపయోగించబడతాయి.</p>
+                            <ul>
+                                <li>1TB to 20TB capacities <br>1TB నుండి 20TB సామర్థ్యాలు</li>
+                                <li>USB and Thunderbolt connections <br>USB మరియు థండర్‌బోల్ట్ కనెక్షన్లు</li>
+                                <li>HDD and SSD options <br>HDD మరియు SSD ఎంపికలు</li>
+                            </ul>
+                        </div>
+
+                        <div class="component-item">
+                            <img src="https://images.unsplash.com/photo-1701367976949-269effa0c323?q=80&w=1172&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Memory Card">
+                            <h4>Memory Cards మెమరీ కార్డ్లు</h4>
+                            <p>Small storage devices used in cameras, phones, and other portable devices.
+                                <br>కెమెరాలలో, ఫోన్లలో మరియు ఇతర పోర్టబుల్ పరికరాలలో ఉపయోగించే చిన్న స్టోరేజ్ పరికరాలు.</p>
+                            <ul>
+                                <li>SD, microSD, and CF formats <br>SD, microSD, మరియు CF ఫార్మాట్లు</li>
+                                <li>8GB to 1TB capacities <br>8GB నుండి 1TB సామర్థ్యాలు</li>
+                                <li>Class 10 and UHS speeds <br>Class 10 మరియు UHS వేగాలు</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Topic 3: Basic Troubleshooting -->
+            <div class="content-section">
+                <h2><span class="section-number">3</span>Basic Troubleshooting ప్రాథమిక ట్రబుల్‌షూటింగ్</h2>
+                <p>Common hardware issues can often be fixed with basic checks:
+                    <br>సాధారణ హార్డ్‌వేర్ సమస్యలను తరచుగా ప్రాథమిక చెక్‌లతో పరిష్కరించవచ్చు:</p>
+                <ul>
+                    <li>Ensure all power cables and connections are properly plugged in. <br>అన్ని పవర్ కేబుల్స్ మరియు కనెక్షన్లు సరిగ్గా ప్లగ్ చేయబడ్డాయని నిర్ధారించుకోండి.</li>
+                    <li>Try restarting the computer if it's frozen or unresponsive. <br>కంప్యూటర్ ఫ్రీజ్ అయ్యింది లేదా ప్రతిస్పందించకపోతే దానిని రీస్టార్ట్ చేయడానికి ప్రయత్నించండి.</li>
+                    <li>Check if peripherals are connected properly (e.g., USB not loose). <br>పరిధీయ పరికరాలు సరిగ్గా కనెక్ట్ చేయబడ్డాయని చెక్ చేయండి (ఉదా: USB వదులుగా లేదు).</li>
+                    <li>If the screen is blank, check power supply and monitor cable. <br>స్క్రీన్ ఖాళీగా ఉంటే, పవర్ సప్లై మరియు మానిటర్ కేబుల్‌ని చెక్ చేయండి.</li>
+                    <li>Refer to indicator lights and error messages for clues. <br>సూచనల కోసం ఇండికేటర్ లైట్లు మరియు ఎర్రర్ సందేశాలను సూచించండి.</li>
+                </ul>
+                <div class="image-container">
+                    <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Troubleshooting Tips">
+                </div>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="BasicComputerSkills.html" class="back-button">Back to Basic Computer Skills </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cyber Security | Digital Literacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            background: rgba(255,255,255,0.97);
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(44,62,80,0.13);
+            padding: 40px 24px 32px 24px;
+            position: relative;
+            z-index: 2;
+        }
+        .main-heading {
+            position: relative;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)),
+                        url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+            background: #fff;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 0;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .intro-text {
+            text-align: center;
+            font-size: 1.18rem;
+            color: #444;
+            margin-bottom: 38px;
+            font-weight: 500;
+        }
+        .modules-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .module-card {
+            background: #f7f8fa;
+            border-radius: 20px;
+            box-shadow: 0 6px 24px rgba(44,62,80,0.09);
+            padding: 28px 32px 22px 32px;
+            width: 90%;
+            max-width: 700px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .module-card:hover {
+            transform: translateY(-6px) scale(1.025);
+            box-shadow: 0 16px 40px rgba(44,62,80,0.13);
+        }
+        .module-card img {
+            width: 100%;
+            max-width: 260px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 14px;
+            margin-bottom: 18px;
+            box-shadow: 0 4px 16px rgba(44,62,80,0.10);
+        }
+        .module-card h3 {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .module-card p {
+            font-size: 1.05rem;
+            color: #444;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .module-card ul {
+            margin: 0 0 10px 0;
+            padding-left: 18px;
+            color: #555;
+            font-size: 0.98rem;
+            text-align: left;
+        }
+        .module-card ul li {
+            margin-bottom: 6px;
+        }
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            margin-top: 18px;
+            box-shadow: 0 6px 18px rgba(102,126,234,0.18);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-button:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px) scale(1.03);
+        }
+        @media (max-width: 900px) {
+            .modules-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .container {
+                padding: 18px 4vw 18px 4vw;
+            }
+            .module-card {
+                width: 98vw;
+                max-width: 98vw;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-heading h1 {
+                font-size: 1.3rem;
+            }
+            .module-card {
+                width: 98vw;
+                max-width: 340px;
+            }
+        }
+        .image-row {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .image-row img {
+            width: 50%;
+            max-width: 180px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(44,62,80,0.10);
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Cyber Security<br>సైబర్ సెక్యూరిటీ</h1>
+            </div>
+            <p class="intro-text">
+                Protect yourself from online threats by using strong passwords, keeping your personal information safe, and avoiding scams or malware.<br>
+                బలమైన పాస్‌వర్డ్స్‌ను ఉపయోగించడం, మీ వ్యక్తిగత సమాచారాన్ని రక్షించడం, మోసాలు లేదా మాల్వేర్‌ను నివారించడం ద్వారా మీరు ఆన్‌లైన్‌లో సురక్షితంగా ఉండవచ్చు.
+            </p>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://img.freepik.com/free-photo/top-view-lock-with-password-keyboard_23-2148578100.jpg?ga=GA1.1.832106470.1750667784&semt=ais_items_boosted&w=740" alt="Strong Passwords">
+                        <img src="https://img.freepik.com/free-photo/computer-security-with-login-password-padlock_107791-16191.jpg?ga=GA1.1.832106470.1750667784&semt=ais_items_boosted&w=740" alt="Password Security">
+                    </div>
+                    <h3>Passwords<br>పాస్‌వర్డ్స్</h3>
+                    <p>Passwords are the first line of defense to protect your online accounts. Strong passwords keep hackers away.<br>
+                    పాస్‌వర్డ్స్ మీ ఆన్‌లైన్ ఖాతాలను రక్షించడానికి మొదటి రక్షణ. బలమైన పాస్‌వర్డ్స్ హ్యాకర్లను దూరంగా ఉంచుతాయి.</p>
+                    <ul>
+                        <li>Use a mix of uppercase, lowercase, numbers, and symbols.<br>పెద్ద, చిన్న అక్షరాలు, సంఖ్యలు, మరియు చిహ్నాలను కలిపి వాడండి.</li>
+                        <li>Avoid using names, birthdays, or easy words like "1234".<br>పేర్లు, పుట్టిన తేదీలు, లేదా "1234" వంటి సులభమైన పదాలను వాడకండి.</li>
+                        <li>Use different passwords for each account.<br>ప్రతి ఖాతాకు వేర్వేరు పాస్‌వర్డ్స్ వాడండి.</li>
+                        <li>Update passwords regularly.<br>పాస్‌వర్డ్స్‌ను తరచుగా మార్చండి.</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://media.gettyimages.com/id/1755832073/photo/young-woman-doing-online-shopping-via-laptop-and-making-payment-with-credit-card.jpg?s=612x612&w=0&k=20&c=VM_AWRi-q7pDGowx1AR-P3S06JLv24xaGlOtikarP9k=" alt="Protect Personal Info">
+                        <img src="https://media.gettyimages.com/id/1488105137/photo/digital-security-biometric-fingerprint-authentication-biometric-safety-concept-modern.jpg?s=612x612&w=0&k=20&c=wnUCj6BJOEURZMtnLuEQ0p438-93waktq4IigIBxqNw=" alt="Personal Info Safety">
+                    </div>
+                    <h3>Personal Information<br>వ్యక్తిగత సమాచారం</h3>
+                    <p>Never share sensitive personal details unless you're 100% sure the platform is secure and trusted.<br>
+                    మీరు ఉపయోగిస్తున్న ప్లాట్‌ఫారమ్ సురక్షితమని నమ్మకపోతే, మీ వ్యక్తిగత వివరాలను పంచుకోకండి.</p>
+                    <ul>
+                        <li>Do not share your full name, address, phone number, or bank details publicly.<br>మీ పూర్తి పేరు, చిరునామా, ఫోన్ నంబర్, లేదా బ్యాంక్ వివరాలను పబ్లిక్‌గా పంచుకోకండి.</li>
+                        <li>Use privacy settings on social media to limit who sees your information.<br>మీ సమాచారం ఎవరు చూడగలరో నియంత్రించడానికి సోషల్ మీడియా ప్రైవసీ సెట్టింగ్స్ వాడండి.</li>
+                        <li>Be cautious when filling out online forms.<br>ఆన్‌లైన్ ఫారమ్‌లు నింపేటప్పుడు జాగ్రత్త వహించండి.</li>
+                    </ul>
+                    <div style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; padding: 16px; border-radius: 12px; margin: 10px 0 0 0;">
+                        <strong>💡 Privacy Tip<br>గోప్యతా సూచన</strong><br>
+                        Always check the privacy policy of websites before sharing personal information. Look for HTTPS in the URL to ensure secure connections.<br>
+                        వ్యక్తిగత వివరాలు పంచుకునే ముందు వెబ్‌సైట్ గోప్యతా విధానాన్ని పరిశీలించండి. URLలో HTTPS ఉందో లేదో చూసుకోండి.
+                    </div>
+                </div>
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.-59X6mJXdz1x0M3hXDYoUQHaE8&pid=Api&P=0&h=180" alt="Phishing & Scams">
+                        <img src="https://www.protechguy.com/wp-content/uploads/sites/712/2019/10/bigstock-Login-Into-Account-In-Email-En-239697814.jpg" alt="Scam Alert">
+                    </div>
+                    <h3>Scams & Malware<br>మోసాలు & మాల్వేర్</h3>
+                    <p>Online scams can come from emails, websites, messages, or phone calls. Malware is harmful software that can damage your data or steal info.<br>
+                    ఆన్‌లైన్ మోసాలు ఇమెయిల్స్, వెబ్‌సైట్లు, సందేశాలు లేదా కాల్స్ ద్వారా రావచ్చు. మాల్వేర్ అనేది మీ డేటాను హాని చేయగల లేదా దొంగిలించగల హానికరమైన సాఫ్ట్‌వేర్.</p>
+                    <ul>
+                        <li><strong>Phishing:</strong> Fake messages pretending to be from trusted sources to steal your data.<br><strong>ఫిషింగ్:</strong> నమ్మదగినవారిలా నటిస్తూ మీ డేటాను దొంగిలించేందుకు పంపే నకిలీ సందేశాలు.</li>
+                        <li><strong>Malware:</strong> Viruses, spyware, or ransomware that harm your computer.<br><strong>మాల్వేర్:</strong> వైరస్‌లు, స్పైవేర్, లేదా రాన్సమ్‌వేర్ వంటి హానికరమైన సాఫ్ట్‌వేర్‌లు.</li>
+                        <li><strong>Scam Calls:</strong> People pretending to be tech support or government officers.<br><strong>మోసపూరిత కాల్స్:</strong> టెక్ సపోర్ట్ లేదా ప్రభుత్వ ఉద్యోగులుగా నటించే వ్యక్తులు.</li>
+                        <li><strong>Unsafe Websites:</strong> Avoid clicking on suspicious links or pop-ups.<br><strong>అసురక్షిత వెబ్‌సైట్లు:</strong> అనుమానాస్పద లింక్స్ లేదా పాప్-అప్స్‌పై క్లిక్ చేయకుండా ఉండండి.</li>
+                    </ul>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="OnlineSafety.html" class="back-button">← Back to Online Safety</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

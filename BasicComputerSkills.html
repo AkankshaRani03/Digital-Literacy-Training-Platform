@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Basic Computer Skills</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .main-heading {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.8rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .main-heading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+        }
+
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .intro-section::before {
+            content: '💻';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .intro-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #2c3e50;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .modules {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        .module-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .module-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .module-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .module-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .module-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .module-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .module-card h3 {
+            margin: 20px 0 15px;
+            color: #2c3e50;
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .module-card p {
+            margin: 15px 0;
+            font-size: 1.1rem;
+            color: #34495e;
+            line-height: 1.6;
+        }
+
+        .module-card .features {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .module-card .features p {
+            font-size: 1rem;
+            color: #2c3e50;
+            margin: 8px 0;
+        }
+
+        .module-card a {
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-block;
+            margin-top: 20px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .module-card a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .module-card a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .module-card a:hover::before {
+            left: 100%;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .content-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            margin: 40px 0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .content-divider::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+            
+            .main-heading {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            
+            .main-heading .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+            
+            .main-heading h1 {
+                margin-left: 100px;
+            }
+            
+            .intro-text {
+                font-size: 1.1rem;
+            }
+            
+            .modules {
+                grid-template-columns: 1fr;
+            }
+            
+            .module-card {
+                padding: 25px;
+            }
+            
+            .module-card h3 {
+                font-size: 1.3rem;
+            }
+            
+            .module-card p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+<div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+    <h1>Basic Computer Skills</h1>
+            </div>
+            
+            <div class="intro-section">
+                <p class="intro-text">
+                    Basic computer skills are the fundamental skills needed to use a computer for everyday tasks. They include skills like concepts of Computer Components, Understanding Hardware Structure, etc..<br><br>
+                    ప్రాథమిక కంప్యూటర్ నైపుణ్యాలు రోజువారీ పనుల కోసం కంప్యూటర్‌ను ఉపయోగించడానికి అవసరమైన ప్రాథమిక నైపుణ్యాలు. వాటిలో కంప్యూటర్ కాంపోనెంట్స్, హార్డ్‌వేర్ స్ట్రక్చర్‌ను అర్థం చేసుకోవడం మొదలైన కాన్సెప్ట్‌లు వంటి నైపుణ్యాలు ఉన్నాయి.
+                </p>
+            </div>
+
+            <div class="content-divider"></div>
+
+            <div class="modules">
+                <div class="module-card">
+                    <img src="https://plus.unsplash.com/premium_photo-1726863026105-b320133454e7?q=80&w=1132&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Hardware Components">
+                    <h3>Hardware Components <br>హార్డ్‌వేర్ భాగాలు</h3> 
+                    <p>Learn about the physical parts of a computer such as the monitor, CPU, keyboard, and printer.<br> మానిటర్, CPU, కీబోర్డ్ మరియు ప్రింటర్ వంటి కంప్యూటర్ యొక్క భౌతిక భాగాల గురించి తెలుసుకోండి.</p>
+                    <div class="features">
+                        <p>• Computer Components కంప్యూటర్ భాగాలు</p>
+                        <p>• Peripherals పెరిఫెరల్స్</p>
+                        <p>• Basic Troubleshooting ప్రాథమిక ట్రబుల్షూటింగ్</p>
+        </div>
+                    <a href="hardware.html">Start Learning</a>
+    </div>
+
+                <div class="module-card">
+                    <img src="https://tse1.mm.bing.net/th?id=OIP.8aHv0T_JtyGlrxfz_hz3fwHaEu&pid=Api&P=0&h=180" alt="Software Components">
+                    <h3>Software Components <br>సాఫ్ట్వేర్ భాగాలు</h3>
+                    <p>Understand the different types of software including system software, utilities, and application software.<br> సిస్టమ్ సాఫ్ట్వేర్, యూటిల్స్ మరియు ఆప్రెచ్చన్ సాఫ్ట్వేర్ వంటి వివిధ రకాల సాఫ్ట్వేర్ల గురించి తెలుసుకోండి.</p>
+                    <div class="features">
+                        <p>• OS Basics ఓఎస్ బేసిక్స్</p>
+                        <p>• File Management ఫైల్ నిర్వహణ</p>
+                        <p>• Application Software ఆప్రెచ్చన్ సాఫ్ట్వేర్</p>
+                    </div>
+                    <a href="software.html">Start Learning</a>
+                </div>
+
+                <div class="module-card">
+                    <img src="https://d1e4pidl3fu268.cloudfront.net/3fa6ed9f-c245-438f-a4eb-02c2deaebea7/internet.crop_926x695_163,0.preview.png" alt="Software Applications">
+                    <h3>Software Applications <br>సాఫ్ట్వేర్ అనువర్తనాలు</h3>
+                    <p>Explore popular software used for document editing, data entry, and internet browsing.<br> డాక్యుమెంట్ ఎడిటింగ్, డేటా ఇన్పుట్ మరియు ఇంటర్నెట్ బ్రౌసింగ్ కోసం ఉపయోగించబడే ప్రముఖ సాఫ్ట్వేర్ల గురించి తెలుసుకోండి.</p>
+                    <div class="features">
+                        <p>• E-Mail Basics ఇల్లి బేసిక్స్</p>
+                        <p>• Web Browsers వెబ్ బ్రౌసర్స్</p>
+                        <p>• Document Tools డాక్యుమెంట్ టూల్స్</p>
+                    </div>
+                    <a href="applications.html">Start Learning</a>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        <a href="Quiz_Basic_Skills.html" class="back-button">Take Quiz</a>
+    </div>
+
+            <div style="text-align: center;">
+                <a href="home.html" class="back-button">Back to Home</a>
+            </div>
+            
+        </div>
+    </div>
+            
+    
+
+</body>
+</html>

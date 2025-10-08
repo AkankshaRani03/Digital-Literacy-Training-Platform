@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Literacy Training Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.75)), 
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            border-radius: 25px;
+            padding: 60px 40px;
+            text-align: center;
+            margin-bottom: 50px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+            border-radius: 25px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-heading {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin-left: 120px;
+        }
+
+        .logo {
+            position: absolute;
+            top: 40px;
+            left: 50px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .content-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .content-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover::before {
+            transform: scaleX(1);
+        }
+
+        .image-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .image-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .image-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .bilingual-content {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        .bilingual-content::before {
+            content: '🌐';
+            position: absolute;
+            top: -15px;
+            right: 30px;
+            font-size: 2rem;
+            background: white;
+            border-radius: 50%;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .english-text {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-weight: 500;
+        }
+
+        .telugu-text {
+            font-size: 19px;
+            line-height: 2.0;
+            color: #34495e;
+            font-family: 'Segoe UI', 'Nirmala UI', 'Kartika', sans-serif;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 25px;
+            border-radius: 15px;
+            border-left: 5px solid #e74c3c;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+            margin: 30px 0;
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .content-divider::after {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 50%;
+            padding: 5px;
+            font-size: 1.2rem;
+        }
+
+        .note {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            font-size:1.5rem;
+            font-weight: 500;
+            margin: 30px 0;
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .note::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .note-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .login-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 30px 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .login-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-button:hover::before {
+            left: 100%;
+        }
+
+        .register-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+            color: white;
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin: 30px 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(118, 75, 162, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .register-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .register-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(118, 75, 162, 0.4);
+        }
+
+        .register-button:hover::before {
+            left: 100%;
+        }
+
+        .button-container {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .button-container .login-button,
+        .button-container .register-button {
+            margin: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .main-heading {
+                font-size: 2.5rem;
+            }
+            
+            .hero-section {
+                padding: 40px 20px;
+            }
+            
+            .content-section {
+                padding: 30px;
+            }
+            
+            .image-showcase {
+                grid-template-columns: 1fr;
+            }
+            
+            .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+
+            .button-container .login-button,
+            .button-container .register-button {
+                display: block;
+                margin: 15px auto;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero-section">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <div class="hero-content">
+                    <h1 class="main-heading">Digital Literacy Training Platform</h1>
+                </div>
+            </div>
+
+            <div class="content-section">
+                <div class="image-showcase">
+                    <div class="image-card">
+                        <img src="https://thurstonchamber.com/wp-content/uploads/2023/04/23_Digital_Lit_vert.png" alt="Digital Literacy Training">
+                    </div>
+                    <div class="image-card">
+                        <img src="https://images.squarespace-cdn.com/content/v1/5ef0b24bc96ec4739e7275d3/c79e936e-9a47-438f-9b8c-664e4b0bcada/danbrowne_colourful_computer_illustration_depicting_why_large_l_e2f90ee6-6f38-4ff8-9dbe-2499cf43bb40.png" alt="Cloud Based Tools">
+                    </div>
+                </div>
+
+                <div class="bilingual-content">
+                    <div class="english-text">
+                        The digitalization of everyday life has significant implications for education. Given the recent proliferation of digital devices and educational software, schools, educators, homemakers, senior Citizens and small scale industrialists are still grappling with how to integrate technologies in day to day life. Amidst these concerns, "DIGITAL LITERACY" has emerged as a key concept to help educators, researchers and educational bureaucrats make sense of the competing demands on schools and students in a digital society.
+                    </div>
+                    <div class="telugu-text">
+                        రోజువారీ జీవితంలో డిజిటలైజేషన్ విద్యపై గణనీయమైన ప్రభావాలను చూపుతుంది. డిజిటల్ పరికరాలు మరియు విద్యా సాఫ్ట్‌వేర్ యొక్క ఇటీవలి విస్తరణ దృష్ట్యా, పాఠశాలలు, విద్యావేత్తలు, గృహిణులు, సీనియర్ సిటిజన్లు మరియు చిన్న తరహా పారిశ్రామికవేత్తలు రోజువారీ జీవితంలో సాంకేతికతలను ఎలా సమగ్రపరచాలో ఇప్పటికీ పెనుగులాడుతున్నారు. ఈ ఆందోళనల మధ్య, విద్యావేత్తలు, పరిశోధకులు మరియు విద్యా అధికారులు డిజిటల్ సమాజంలో పాఠశాలలు మరియు విద్యార్థులపై పోటీ డిమాండ్లను అర్థం చేసుకోవడానికి సహాయపడే కీలకమైన భావనగా "డిజిటల్ లిటరసీ" ఉద్భవించింది.
+                    </div>
+                </div>
+
+                <div class="content-divider"></div>
+
+                <div class="image-showcase">
+                    <div class="image-card">
+                        <img src="https://i0.wp.com/www.niallmcnulty.com/wp-content/uploads/2021/03/shutterstock_444779302.jpeg?w=1275&ssl=1" alt="Digital Skills">
+                    </div>
+                    <div class="image-card">
+                        <img src="https://images.unsplash.com/photo-1628605007510-696cd5731961?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cloud Based Tools">
+                    </div>
+                </div>
+
+                <div class="bilingual-content">
+                    <div class="english-text">
+                        Digital literacy refers to a person's ability to use computers and digital tools at a basic level. Just as general literacy involves reading and writing, digital literacy includes tasks like turning a computer on/off, using search engines, composing emails, and browsing the internet. In today's world, computers often perform tasks more efficiently than humans. Although created by humans, technology now plays a dominant role in our lives. Being digitally literate also means staying safe online and using the internet responsibly.
+                    </div>
+                    <div class="telugu-text">
+                        డిజిటల్ అక్షరాస్యత అంటే ఒక వ్యక్తి ప్రాథమిక స్థాయిలో కంప్యూటర్లు మరియు డిజిటల్ సాధనాలను ఉపయోగించగల సామర్థ్యాన్ని సూచిస్తుంది. సాధారణ అక్షరాస్యతలో చదవడం మరియు రాయడం ఉన్నట్లే, డిజిటల్ అక్షరాస్యతలో కంప్యూటర్‌ను ఆన్/ఆఫ్ చేయడం, సెర్చ్ ఇంజిన్‌లను ఉపయోగించడం, ఇమెయిల్‌లను కంపోజ్ చేయడం మరియు ఇంటర్నెట్‌ను బ్రౌజ్ చేయడం వంటి పనులు ఉంటాయి. నేటి ప్రపంచంలో, కంప్యూటర్లు తరచుగా మానవుల కంటే సమర్థవంతంగా పనులను నిర్వహిస్తాయి. మానవులే సృష్టించినప్పటికీ, సాంకేతికత ఇప్పుడు మన జీవితాల్లో ఆధిపత్య పాత్ర పోషిస్తుంది. డిజిటల్ అక్షరాస్యత అంటే ఆన్‌లైన్‌లో సురక్షితంగా ఉండటం మరియు ఇంటర్నెట్‌ను బాధ్యతాయుతంగా ఉపయోగించడం అని కూడా అర్థం.
+                    </div>
+                </div>
+            </div>
+
+            <div class="note">
+                <div class="note-content">
+                    Take a step to start your journey towards Digital Literacy through Self Learning.<br>స్వీయ అభ్యాసం ద్వారా డిజిటల్ అక్షరాస్యత వైపు మీ ప్రయాణాన్ని ప్రారంభించడానికి ఒక అడుగు వేయండి.
+                </div>
+            </div>
+        
+           <div class="button-container">
+    <a href="register.html" class="register-button">Register | నమోదు చేయండి</a>
+    <a href="login.html" class="login-button">Login | లాగిన్</a>
+</div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Software - Digital Literacy Training Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .page-wrapper {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .header-section {
+            text-align: center;
+            color: #1681ec;
+            font-size: 2rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://img.freepik.com/premium-vector/abstract-dark-blue-modern-futuristic-science-technology-hi-tech-digital-abstract-dark-blue-colorful-design-banner-background-vector-abstract-graphic-design-banner-pattern-background-web-template_181182-33457.jpg');
+            background-size: cover;
+            background-position: center;
+            border-radius: 25px;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            border: 3px solid #1681ec;
+            flex-shrink: 0;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .intro-text {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            text-align: center;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: #2c3e50;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-divider {
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+            margin: 40px 0;
+        }
+
+        .content-section {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-5px);
+        }
+
+        .content-section h2 {
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .section-number {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #34495e;
+            margin-bottom: 30px;
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .app-item {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .app-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .app-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .app-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .app-item h3 {
+            color: #2c3e50;
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 15px 0 10px;
+        }
+
+        .app-item h4 {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 15px 0 10px;
+        }
+
+        .app-item p {
+            font-size: 1rem;
+            color: #34495e;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .app-item ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+
+        .app-item li {
+            font-size: 0.95rem;
+            color: #34495e;
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .feature-highlight {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px dashed #667eea;
+        }
+
+        .feature-highlight h4 {
+            color: #2c3e50;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #667eea;
+            backdrop-filter: blur(5px);
+        }
+
+        .feature-item strong {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .examples-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border: 2px dashed #667eea;
+        }
+
+        .examples-section h3 {
+            color: #ebedf0;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .example-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            backdrop-filter: blur(5px);
+        }
+
+        .example-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .example-item h4 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .example-item p {
+            color: #34495e;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .visit-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .visit-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .back-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+            margin-top: 20px;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        .empower-text {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #e6ecf1;
+            margin: 40px 0;
+            border: 2px dashed #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header-section {
+                padding: 40px 20px;
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 25px;
+            }
+            
+            .app-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="header-section">
+            <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Application Software</h1>
+            </div>
+            
+            <div class="intro-text">
+                Application software consists of programs designed to help users perform specific tasks on computers. These applications make computers useful for everyday activities like communication, productivity, and entertainment.
+                <br>అప్లికేషన్ సాఫ్ట్‌వేర్‌లో వినియోగదారులు కంప్యూటర్‌లో నిర్దిష్ట పనులు చేయడానికి సహాయపడే ప్రోగ్రామ్‌లు ఉంటాయి. ఈ అప్లికేషన్‌లు కంప్యూటర్‌లను కమ్యూనికేషన్, ఉత్పాదకత మరియు వినోదం వంటి రోజువారీ కార్యకలాపాలకు ఉపయోగకరంగా చేస్తాయి.
+            </div>
+
+            <div class="content-divider"></div>
+
+            <!-- Email Applications Section -->
+            <div class="content-section">
+                <h2><span class="section-number">1</span>Email Applications ఇమెయిల్ అప్లికేషన్లు</h2>
+                <p>Email (Electronic Mail) is a method of exchanging messages digitally over the internet. It's fast, reliable, and widely used in both personal and professional communication.
+                    <br>ఇమెయిల్ (ఎలక్ట్రానిక్ మెయిల్) అనేది ఇంటర్నెట్ ద్వారా డిజిటల్‌గా సందేశాలను మార్పిడి చేసే పద్ధతి. ఇది వేగవంతమైనది, నమ్మదగినది మరియు వ్యక్తిగత మరియు వృత్తిపరమైన కమ్యూనికేషన్‌లో విస్తృతంగా ఉపయోగించబడుతుంది.</p>
+                
+                <div class="app-grid">
+                    <div class="app-item">
+                        <img src="https://martech.org/wp-content/uploads/2015/09/email-laptop-computer-marketing-ss-1920.jpg" alt="Email Interface">
+                        <h4>📧 Email Basics ఇమెయిల్ బేసిక్స్</h4>
+                        <p>Learn the fundamentals of email communication and management
+                            <br>ఇమెయిల్ కమ్యూనికేషన్ మరియు నిర్వహణ యొక్క ప్రాథమిక అంశాలను నేర్చుకోండి</p>
+                        <ul>
+                            <li><strong>Composing Messages:</strong> Write and format email content <br><strong>సందేశాలను రచించడం:</strong> ఇమెయిల్ కంటెంట్‌ని వ్రాయడం మరియు ఫార్మాట్ చేయడం</li>
+                            <li><strong>Sending & Receiving:</strong> Exchange messages with others <br><strong>పంపడం మరియు స్వీకరించడం:</strong> ఇతరులతో సందేశాలను మార్పిడి చేయడం</li>
+                            <li><strong>Attachments:</strong> Send files like documents and images <br><strong>అటాచ్‌మెంట్లు:</strong> పత్రాలు మరియు చిత్రాలు వంటి ఫైల్‌లను పంపడం</li>
+                            <li><strong>Organization:</strong> Manage inbox and folders <br><strong>నిర్వహణ:</strong> ఇన్‌బాక్స్ మరియు ఫోల్డర్‌లను నిర్వహించడం</li>
+                        </ul>
+                    </div>
+                    <div class="app-item">
+                        <img src="https://blog.42mate.com/wp-content/uploads/2018/07/opening-email-ss-1920.jpg" alt="Email Security">
+                        <h4>🔒 Email Security ఇమెయిల్ భద్రత</h4>
+                        <p>Protect your email account and communications from threats
+                            <br>మీ ఇమెయిల్ ఖాతా మరియు కమ్యూనికేషన్‌లను బెదిరింపుల నుండి రక్షించుకోండి</p>
+                        <ul>
+                            <li><strong>Strong Passwords:</strong> Use complex, unique passwords <br><strong>బలమైన పాస్‌వర్డ్లు:</strong> సంక్లిష్టమైన, ప్రత్యేక పాస్‌వర్డ్లను ఉపయోగించండి</li>
+                            <li><strong>Two-Factor Authentication:</strong> Add extra security layer <br><strong>రెండు-కారక ప్రమాణీకరణ:</strong> అదనపు భద్రతా పొరను జోడించండి</li>
+                            <li><strong>Spam Protection:</strong> Avoid suspicious emails <br><strong>స్పామ్ రక్షణ:</strong> సంశయాస్పద ఇమెయిల్‌లను నివారించండి</li>
+                            <li><strong>Phishing Awareness:</strong> Recognize fake emails <br><strong>ఫిషింగ్ అవగాహన:</strong> నకిలీ ఇమెయిల్‌లను గుర్తించండి</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Web Browsers Section -->
+            <div class="content-section">
+                <h2><span class="section-number">2</span>Web Browsers వెబ్ బ్రౌజర్లు</h2>
+                <p>Web browsers are software applications used to access and navigate the internet. They allow users to visit websites, download content, and interact with online services.
+                    <br>వెబ్ బ్రౌజర్లు ఇంటర్నెట్‌ని యాక్సెస్ చేయడానికి మరియు నావిగేట్ చేయడానికి ఉపయోగించే సాఫ్ట్‌వేర్ అప్లికేషన్లు. ఇవి వినియోగదారులను వెబ్‌సైట్‌లను సందర్శించడానికి, కంటెంట్‌ని డౌన్‌లోడ్ చేయడానికి మరియు ఆన్‌లైన్ సేవలతో పరస్పర చర్య చేయడానికి అనుమతిస్తాయి.</p>
+                
+                <div class="app-grid">
+                    <div class="app-item">
+                        <img src="https://tse4.mm.bing.net/th?id=OIP.Nwuo3dA75RnSf61Y2EgMowHaDG&pid=Api&P=0&h=180" alt="Web Browser Interface">
+                        <h4>🌐 Browser Basics బ్రౌజర్ బేసిక్స్</h4>
+                        <p>Master essential web browsing skills and navigation
+                            <br>అవసరమైన వెబ్ బ్రౌజింగ్ నైపుణ్యాలు మరియు నావిగేషన్‌ని నైపుణ్యం పొందండి</p>
+                        <ul>
+                            <li><strong>Address Bar:</strong> Enter website URLs to visit <br><strong>అడ్రస్ బార్:</strong> సందర్శించడానికి వెబ్‌సైట్ URLలను నమోదు చేయండి</li>
+                            <li><strong>Navigation:</strong> Use back, forward, and refresh buttons <br><strong>నావిగేషన్:</strong> వెనుక, ముందుకు మరియు రిఫ్రెష్ బటన్లను ఉపయోగించండి</li>
+                            <li><strong>Bookmarks:</strong> Save frequently visited sites <br><strong>బుక్‌మార్క్‌లు:</strong> తరచుగా సందర్శించే సైట్‌లను సేవ్ చేయండి</li>
+                            <li><strong>Tabs:</strong> Open multiple websites simultaneously <br><strong>ట్యాబ్‌లు:</strong> ఒకేసారి బహుళ వెబ్‌సైట్‌లను తెరవండి</li>
+                        </ul>
+                    </div>
+                    <div class="app-item">
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.8o7L8-8bVJnD1nlb5EZh-QHaEK&pid=Api&P=0&h=180" alt="Browser Security">
+                        <h4>🛡️ Browser Security బ్రౌజర్ భద్రత</h4>
+                        <p>Stay safe while browsing the internet
+                            <br>ఇంటర్నెట్‌ని బ్రౌజ్ చేస్తున్నప్పుడు సురక్షితంగా ఉండండి</p>
+                        <ul>
+                            <li><strong>HTTPS:</strong> Look for secure website indicators <br><strong>HTTPS:</strong> సురక్షిత వెబ్‌సైట్ సూచికల కోసం చూడండి</li>
+                            <li><strong>Privacy Settings:</strong> Control data collection <br><strong>గోప్యతా సెట్టింగ్‌లు:</strong> డేటా సేకరణను నియంత్రించండి</li>
+                            <li><strong>Extensions:</strong> Install trusted browser add-ons <br><strong>ఎక్స్టెన్షన్లు:</strong> నమ్మదగిన బ్రౌజర్ యాడ్-ఆన్‌లను ఇన్‌స్టాల్ చేయండి</li>
+                            <li><strong>Updates:</strong> Keep browser updated for security <br><strong>నవీకరణలు:</strong> భద్రత కోసం బ్రౌజర్‌ని నవీకరించబడిన స్థితిలో ఉంచండి</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popular Applications Section -->
+            <div class="examples-section">
+                <h3>Popular Applications ప్రజాదరణ పొందిన అప్లికేషన్లు</h3>
+                <div class="examples-grid">
+                    <div class="example-item">
+                        <h4>📧 Gmail</h4>
+                        <p>Google's email service with 15GB free storage
+                            <br>15GB ఉచిత నిల్వతో గూగుల్ ఇమెయిల్ సేవ</p>
+                        <a href="https://mail.google.com" class="visit-link">Visit </a>
+                    </div>
+                    <div class="example-item">
+                        <h4>📨 Outlook</h4>
+                        <p>Microsoft's email and calendar application
+                            <br>మైక్రోసాఫ్ట్ ఇమెయిల్ మరియు క్యాలెండర్ అప్లికేషన్</p>
+                        <a href="https://outlook.live.com" class="visit-link">Visit </a>
+                    </div>
+                    <div class="example-item">
+                        <h4>🌐 Google Chrome</h4>
+                        <p>Fast and secure web browser by Google
+                            <br>గూగుల్ ద్వారా వేగవంతమైన మరియు సురక్షితమైన వెబ్ బ్రౌజర్</p>
+                        <a href="https://www.google.com/chrome" class="visit-link">Visit </a>
+                    </div>
+                    <div class="example-item">
+                        <h4>🦊 Mozilla Firefox</h4>
+                        <p>Privacy-focused open-source browser
+                            <br>గోప్యత-కేంద్రీకృత ఓపెన్-సోర్స్ బ్రౌజర్</p>
+                        <a href="https://www.mozilla.org/firefox" class="visit-link">Visit </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="empower-text">
+                <strong>🚀 Master application software to enhance your digital productivity! 🚀</strong>
+                <br><br>
+                <strong>మీ డిజిటల్ ఉత్పాదకతను మెరుగుపరచడానికి అప్లికేషన్ సాఫ్ట్‌వేర్‌ని నైపుణ్యం పొందండి! 🚀</strong>
+            </div>
+
+            <div style="text-align: center;">
+                <a href="BasicComputerSkills.html" class="back-button">Back to Basic Computer skills</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

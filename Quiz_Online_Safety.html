@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz: Online Safety | Digital Literacy Training</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .main-heading {
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8)), 
+                        url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+            position: relative;
+        }
+        .main-heading::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+            border-radius: 20px;
+        }
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            margin-left: 120px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .quiz-section {
+            margin: 0 auto;
+            max-width: 800px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px 30px;
+            border-left: 6px solid #667eea;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+        .question {
+            margin: 20px 0;
+            padding: 15px;
+            border-left: 4px solid #1a73e8;
+            background: #f9f9f9;
+            border-radius: 8px;
+        }
+        .question p {
+            font-weight: bold;
+        }
+        label {
+            display: block;
+            margin: 8px 0;
+            cursor: pointer;
+        }
+        button[type="button"] {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        button[type="button"]:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+        #result {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 20px;
+            text-align: center;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 40px;
+            text-decoration: none;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(102, 126, 234, 0.4);
+        }
+        .back-button:hover::before {
+            left: 100%;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .main-heading {
+                font-size: 2rem;
+                padding: 40px 20px;
+            }
+            .main-heading .logo {
+                width: 80px;
+                height: 80px;
+                top: 20px;
+                left: 20px;
+            }
+            .main-heading h1 {
+                margin-left: 100px;
+            }
+            .quiz-section {
+                padding: 25px 10px;
+            }
+        }
+        .username-group {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        .username-label {
+            display: block;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #4b3fa7;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+        #username {
+            width: 60%;
+            max-width: 400px;
+            min-width: 220px;
+            padding: 18px 20px;
+            font-size: 1.15rem;
+            border-radius: 12px;
+            border: 2px solid #764ba2;
+            background: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+            margin: 0 auto 0 auto;
+            display: block;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        #username:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.13);
+            background: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Online Safety Quiz</h1>
+            </div>
+            <div class="quiz-section">
+                <form id="quizForm">
+                    <div class="username-group">
+                        <label for="username" class="username-label">Name | పేరు</label>
+                        <input type="text" id="username" name="username" placeholder="Enter your name | మీ పేరు నమోదు చేయండి" required>
+                    </div>
+                    <div class="question">
+                        <p>1. What is the best way to create a strong password?<br><span style='font-weight:normal;color:#764ba2;'>బలమైన పాస్‌వర్డ్‌ను సృష్టించడానికి ఉత్తమ మార్గం ఏమిటి?</span></p>
+                        <label><input type="radio" name="q1" value="A"> Use your birthdate<br><span style='font-weight:normal;color:#764ba2;'>మీ పుట్టిన తేదీని ఉపయోగించండి</span></label>
+                        <label><input type="radio" name="q1" value="B"> Use "password123"<br><span style='font-weight:normal;color:#764ba2;'>"password123"ని ఉపయోగించండి</span></label>
+                        <label><input type="radio" name="q1" value="C"> Use a mix of letters, numbers, and symbols<br><span style='font-weight:normal;color:#764ba2;'>అక్షరాలు, సంఖ్యలు మరియు చిహ్నాల మిశ్రమాన్ని ఉపయోగించండి</span></label>
+                        <label><input type="radio" name="q1" value="D"> Use your name<br><span style='font-weight:normal;color:#764ba2;'>మీ పేరును ఉపయోగించండి</span></label>
+                    </div>
+                    <div class="question">
+                        <p>2. What is phishing?<br><span style='font-weight:normal;color:#764ba2;'>ఫిషింగ్ అంటే ఏమిటి?</span></p>
+                        <label><input type="radio" name="q2" value="A"> A fishing game<br><span style='font-weight:normal;color:#764ba2;'>ఒక ఫిషింగ్ గేమ్</span></label>
+                        <label><input type="radio" name="q2" value="B"> Sending fake messages to steal personal info<br><span style='font-weight:normal;color:#764ba2;'>వ్యక్తిగత సమాచారాన్ని దొంగిలించడానికి నకిలీ సందేశాలను పంపడం</span></label>
+                        <label><input type="radio" name="q2" value="C"> Sending a resume online<br><span style='font-weight:normal;color:#764ba2;'>ఆన్‌లైన్‌లో రిజ్యూమ్ పంపడం</span></label>
+                        <label><input type="radio" name="q2" value="D"> Uploading photos<br><span style='font-weight:normal;color:#764ba2;'>ఫోటోలు అప్‌లోడ్ చేయడం</span></label>
+                    </div>
+                    <div class="question">
+                        <p>3. Which of the following is an example of personal information?<br><span style='font-weight:normal;color:#764ba2;'>క్రింది వాటిలో ఏది వ్యక్తిగత సమాచారం ఉదాహరణ?</span></p>
+                        <label><input type="radio" name="q3" value="A"> Your favorite color<br><span style='font-weight:normal;color:#764ba2;'>మీకు ఇష్టమైన రంగు</span></label>
+                        <label><input type="radio" name="q3" value="B"> Your school name<br><span style='font-weight:normal;color:#764ba2;'>మీ పాఠశాల పేరు</span></label>
+                        <label><input type="radio" name="q3" value="C"> Your bank account number<br><span style='font-weight:normal;color:#764ba2;'>మీ బ్యాంక్ ఖాతా సంఖ్య</span></label>
+                        <label><input type="radio" name="q3" value="D"> Your shoe size<br><span style='font-weight:normal;color:#764ba2;'>మీ షూ సైజ్</span></label>
+                    </div>
+                    <div class="question">
+                        <p>4. What are cookies in a browser?<br><span style='font-weight:normal;color:#764ba2;'>బ్రౌజర్‌లో కుకీలు అంటే ఏమిటి?</span></p>
+                        <label><input type="radio" name="q4" value="A"> Internet snacks<br><span style='font-weight:normal;color:#764ba2;'>ఇంటర్నెట్ స్నాక్స్</span></label>
+                        <label><input type="radio" name="q4" value="B"> Programs that clean viruses<br><span style='font-weight:normal;color:#764ba2;'>వైరస్‌లను శుభ్రపరిచే ప్రోగ్రామ్స్</span></label>
+                        <label><input type="radio" name="q4" value="C"> Small data files saved by websites<br><span style='font-weight:normal;color:#764ba2;'>వెబ్‌సైట్లు సేవ్ చేసే చిన్న డేటా ఫైళ్లు</span></label>
+                        <label><input type="radio" name="q4" value="D"> Chat software<br><span style='font-weight:normal;color:#764ba2;'>చాట్ సాఫ్ట్‌వేర్</span></label>
+                    </div>
+                    <div class="question">
+                        <p>5. What is two-factor authentication?<br><span style='font-weight:normal;color:#764ba2;'>టూ-ఫ్యాక్టర్ ఆథెంటికేషన్ అంటే ఏమిటి?</span></p>
+                        <label><input type="radio" name="q5" value="A"> Logging in with one password<br><span style='font-weight:normal;color:#764ba2;'>ఒక పాస్‌వర్డ్‌తో లాగిన్ అవ్వడం</span></label>
+                        <label><input type="radio" name="q5" value="B"> Logging in with a password and a second method<br><span style='font-weight:normal;color:#764ba2;'>పాస్‌వర్డ్ మరియు రెండవ పద్ధతితో లాగిన్ అవ్వడం</span></label>
+                        <label><input type="radio" name="q5" value="C"> Just using fingerprint only<br><span style='font-weight:normal;color:#764ba2;'>ఫింగర్‌ప్రింట్ మాత్రమే ఉపయోగించడం</span></label>
+                        <label><input type="radio" name="q5" value="D"> Logging in from two devices<br><span style='font-weight:normal;color:#764ba2;'>రెండు పరికరాల నుండి లాగిన్ అవ్వడం</span></label>
+                    </div>
+                    <div class="question">
+                        <p>6. Which of the following is ethical online behavior?<br><span style='font-weight:normal;color:#764ba2;'>క్రింది వాటిలో ఏది నైతిక ఆన్‌లైన్ ప్రవర్తన?</span></p>
+                        <label><input type="radio" name="q6" value="A"> Copying someone's work without permission<br><span style='font-weight:normal;color:#764ba2;'>ఎవరైనా పనిని అనుమతి లేకుండా కాపీ చేయడం</span></label>
+                        <label><input type="radio" name="q6" value="B"> Reporting cyberbullying<br><span style='font-weight:normal;color:#764ba2;'>సైబర్‌బులీయింగ్‌ను నివేదించడం</span></label>
+                        <label><input type="radio" name="q6" value="C"> Sharing fake news<br><span style='font-weight:normal;color:#764ba2;'>నకిలీ వార్తలను పంచుకోవడం</span></label>
+                        <label><input type="radio" name="q6" value="D"> Spamming emails<br><span style='font-weight:normal;color:#764ba2;'>ఇమెయిల్స్‌ను స్పామ్ చేయడం</span></label>
+                    </div>
+                    <div class="question">
+                        <p>7. Which is an example of respectful online communication?<br><span style='font-weight:normal;color:#764ba2;'>గౌరవప్రదమైన ఆన్‌లైన్ కమ్యూనికేషన్‌కు ఉదాహరణ ఏమిటి?</span></p>
+                        <label><input type="radio" name="q7" value="A"> Using all CAPS in a message<br><span style='font-weight:normal;color:#764ba2;'>ఒక సందేశంలో అన్ని పెద్ద అక్షరాలు ఉపయోగించడం</span></label>
+                        <label><input type="radio" name="q7" value="B"> Ignoring others' opinions<br><span style='font-weight:normal;color:#764ba2;'>ఇతరుల అభిప్రాయాలను పట్టించుకోకపోవడం</span></label>
+                        <label><input type="radio" name="q7" value="C"> Using polite language and listening<br><span style='font-weight:normal;color:#764ba2;'>వినయపూర్వకమైన భాషను ఉపయోగించడం మరియు వినడం</span></label>
+                        <label><input type="radio" name="q7" value="D"> Posting without reading<br><span style='font-weight:normal;color:#764ba2;'>చదవకుండా పోస్ట్ చేయడం</span></label>
+                    </div>
+                    <div class="question">
+                        <p>8. What should you do if you receive a suspicious link?<br><span style='font-weight:normal;color:#764ba2;'>మీకు అనుమానాస్పద లింక్ వచ్చినప్పుడు మీరు ఏమి చేయాలి?</span></p>
+                        <label><input type="radio" name="q8" value="A"> Click it quickly<br><span style='font-weight:normal;color:#764ba2;'>దాన్ని వెంటనే క్లిక్ చేయండి</span></label>
+                        <label><input type="radio" name="q8" value="B"> Share with friends<br><span style='font-weight:normal;color:#764ba2;'>స్నేహితులతో పంచుకోండి</span></label>
+                        <label><input type="radio" name="q8" value="C"> Ignore and delete it<br><span style='font-weight:normal;color:#764ba2;'>దాన్ని పట్టించుకోకుండా డిలీట్ చేయండి</span></label>
+                        <label><input type="radio" name="q8" value="D"> Post it on social media<br><span style='font-weight:normal;color:#764ba2;'>సోషల్ మీడియాలో పోస్ట్ చేయండి</span></label>
+                    </div>
+                    <div class="question">
+                        <p>9. Which of the following is a form of online harassment?<br><span style='font-weight:normal;color:#764ba2;'>క్రింది వాటిలో ఏది ఆన్‌లైన్ వేధింపుల రూపం?</span></p>
+                        <label><input type="radio" name="q9" value="A"> Sending polite feedback<br><span style='font-weight:normal;color:#764ba2;'>వినయపూర్వకమైన అభిప్రాయాన్ని పంపడం</span></label>
+                        <label><input type="radio" name="q9" value="B"> Cyberbullying<br><span style='font-weight:normal;color:#764ba2;'>సైబర్‌బులీయింగ్</span></label>
+                        <label><input type="radio" name="q9" value="C"> Writing blogs<br><span style='font-weight:normal;color:#764ba2;'>బ్లాగులు వ్రాయడం</span></label>
+                        <label><input type="radio" name="q9" value="D"> Messaging friends<br><span style='font-weight:normal;color:#764ba2;'>స్నేహితులకు సందేశాలు పంపడం</span></label>
+                    </div>
+                    <div class="question">
+                        <p>10. Which tip helps protect your privacy online?<br><span style='font-weight:normal;color:#764ba2;'>ఆన్‌లైన్‌లో మీ గోప్యతను రక్షించడంలో ఏ సూచన సహాయపడుతుంది?</span></p>
+                        <label><input type="radio" name="q10" value="A"> Always accept all cookies<br><span style='font-weight:normal;color:#764ba2;'>ఎల్లప్పుడూ అన్ని కుకీలను అంగీకరించండి</span></label>
+                        <label><input type="radio" name="q10" value="B"> Avoid using any settings<br><span style='font-weight:normal;color:#764ba2;'>ఏదైనా సెట్టింగ్స్‌ను ఉపయోగించకుండా ఉండండి</span></label>
+                        <label><input type="radio" name="q10" value="C"> Use privacy settings and limit sharing<br><span style='font-weight:normal;color:#764ba2;'>గోప్యతా సెట్టింగ్స్‌ను ఉపయోగించండి మరియు పంచుకోవడాన్ని పరిమితం చేయండి</span></label>
+                        <label><input type="radio" name="q10" value="D"> Share passwords<br><span style='font-weight:normal;color:#764ba2;'>పాస్‌వర్డ్‌లను పంచుకోండి</span></label>
+                    </div>
+                    <button type="button" onclick="checkAnswers()">Submit Answers</button>
+                    <div id="result"></div>
+                </form>
+                <div style="text-align: center;">
+                    <a href="OnlineSafety.html" class="back-button">← Back to Module</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+    function checkAnswers() {
+        const correctAnswers = {
+            q1: "C",
+            q2: "B",
+            q3: "C",
+            q4: "C",
+            q5: "B",
+            q6: "B",
+            q7: "C",
+            q8: "C",
+            q9: "B",
+            q10: "C"
+        };
+        let score = 0;
+        for (let i = 1; i <= 10; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === correctAnswers[`q${i}`]) {
+                score++;
+            }
+        }
+        const result = document.getElementById("result");
+        result.innerHTML = `You scored ${score} out of 10. ${score === 10 ? "🎉 Excellent!" : score >= 7 ? "✅ Good job!" : "🔄 Try again to improve."}`;
+        result.style.marginTop = "20px";
+        localStorage.setItem('score_os', `${score} / 10`);
+
+    }
+    </script>
+</body>
+</html>

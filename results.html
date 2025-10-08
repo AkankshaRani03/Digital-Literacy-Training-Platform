@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Results Summary</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: #333;
+      min-height: 100vh;
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .page-wrapper { position: relative; overflow-x: hidden; }
+    .floating-shapes {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 1;
+    }
+    .shape {
+      position: absolute; background: rgba(255,255,255,0.1); border-radius: 50%;
+      animation: float 6s ease-in-out infinite;
+    }
+    .shape:nth-child(1) { width: 80px; height: 80px; top: 20%; left: 10%; animation-delay: 0s; }
+    .shape:nth-child(2) { width: 120px; height: 120px; top: 60%; right: 15%; animation-delay: 2s; }
+    .shape:nth-child(3) { width: 60px; height: 60px; top: 80%; left: 20%; animation-delay: 4s; }
+    @keyframes float { 0%,100%{transform:translateY(0) rotate(0deg);} 50%{transform:translateY(-20px) rotate(180deg);} }
+    .container {
+      max-width: 900px; margin: 0 auto; background: rgba(255,255,255,0.97);
+      backdrop-filter: blur(15px); border-radius: 25px; padding: 40px;
+      box-shadow: 0 25px 50px rgba(0,0,0,0.1); position: relative; z-index: 2;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+    .main-heading {
+      text-align: center; color: #2c3e50; font-size: 2rem; font-weight: 800;
+      padding: 60px 40px 40px 40px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,255,255,0.8)),
+                  url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover; background-position: center; border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.1); margin-bottom: 40px; overflow: hidden; position: relative;
+    }
+    .main-heading::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(45deg, rgba(102,126,234,0.1), rgba(118,75,162,0.1));
+      border-radius: 20px;
+    }
+    .main-heading .logo {
+      position: absolute; top: 30px; left: 40px; width: 100px; height: 100px;
+      border-radius: 50%; object-fit: cover; border: 4px solid rgba(102,126,234,0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: pulse 3s ease-in-out infinite; z-index: 2;
+    }
+    @keyframes pulse { 0%,100%{transform:scale(1);} 50%{transform:scale(1.05);} }
+    .main-heading h1 { position: relative; z-index: 2; margin-left: 120px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1);}
+    .summary {
+      margin-top: 30px;
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      border-radius: 20px;
+      padding: 40px 30px;
+      border-left: 6px solid #667eea;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      position: relative;
+      font-size: 1.2rem;
+    }
+    .summary p {
+      font-size: 1.2rem;
+      padding: 10px 0;
+      margin: 0;
+    }
+    .quiz-link, .back-button {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 8px 20px rgba(102,126,234,0.3);
+      border: none;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .quiz-link:hover, .back-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(102,126,234,0.4);
+    }
+    .back-button {
+      margin-left: 16px;
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    }
+    @media (max-width: 768px) {
+      body { padding: 10px; }
+      .container { padding: 20px; }
+      .main-heading { font-size: 2rem; padding: 40px 20px; }
+      .main-heading .logo { width: 80px; height: 80px; top: 20px; left: 20px; }
+      .main-heading h1 { margin-left: 100px; }
+      .summary { padding: 25px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="floating-shapes">
+      <div class="shape"></div>
+      <div class="shape"></div>
+      <div class="shape"></div>
+    </div>
+    <div class="container">
+      <div class="main-heading">
+        <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+        <h1>Quiz Results Summary<br><span style='font-size:1.2rem;font-weight:normal;color:#764ba2;'></h1>
+      </div>
+      <div class="summary" id="resultsSummary">
+        <p>Loading your scores...<br><span style='font-size:1rem;font-weight:normal;color:#764ba2;'>మీ స్కోర్లు లోడ్ అవుతున్నాయి...</span></p>
+      </div>
+      <div style="text-align: center;">
+        <a href="home.html" class="back-button">← Back to Home<br><span style='font-weight:normal;color:#fff;'></a>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Show scores stored in localStorage (set by each quiz)
+    const quizzes = [
+      { key: 'score_bcs', name: 'Basic Computer Skills', telugu: 'ప్రాథమిక కంప్యూటర్ నైపుణ్యాలు' },
+      { key: 'score_in', name: 'Internet Navigation', telugu: 'ఇంటర్నెట్ నావిగేషన్' },
+      { key: 'score_os', name: 'Online Safety', telugu: 'ఆన్లైన్ సురక్షత' },
+      { key: 'score_final', name: 'Final Assessment', telugu: 'తుది అంచనా' }
+    ];
+
+    const summaryDiv = document.getElementById('resultsSummary');
+    summaryDiv.innerHTML = '';
+
+    quizzes.forEach(q => {
+      const score = localStorage.getItem(q.key);
+      summaryDiv.innerHTML += `<p><strong>${q.name}</strong><br><span style='color:#764ba2;font-weight:normal;'>${q.telugu}</span>: ${score ? score : '<span style=\'color:#b00\'>Not Attempted<br><span style=\'color:#764ba2\'>పరీక్షించలేదు</span></span>'}</p>`;
+    });
+  </script>
+</body>
+</html>

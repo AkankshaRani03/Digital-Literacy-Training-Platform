@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Citizenship | Digital Literacy</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        .page-wrapper {
+            position: relative;
+            overflow-x: hidden;
+        }
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 2s;
+        }
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 40px auto 0 auto;
+            background: rgba(255,255,255,0.97);
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(44,62,80,0.13);
+            padding: 40px 24px 32px 24px;
+            position: relative;
+            z-index: 2;
+        }
+        .main-heading {
+            position: relative;
+            text-align: center;
+            color: #2c3e50;
+            font-size: 2.2rem;
+            font-weight: 800;
+            padding: 60px 40px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.7)),
+                        url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+            overflow: hidden;
+        }
+        .main-heading .logo {
+            position: absolute;
+            top: 30px;
+            left: 40px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            animation: pulse 3s ease-in-out infinite;
+            z-index: 2;
+            background: #fff;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        .main-heading h1 {
+            position: relative;
+            z-index: 2;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            font-size: 3rem;
+            font-weight: 800;
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 0;
+            text-align: center;
+            line-height: 1.2;
+        }
+        .intro-text {
+            text-align: center;
+            font-size: 1.18rem;
+            color: #444;
+            margin-bottom: 38px;
+            font-weight: 500;
+        }
+        .modules-grid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .module-card {
+            background: #f7f8fa;
+            border-radius: 20px;
+            box-shadow: 0 6px 24px rgba(44,62,80,0.09);
+            padding: 28px 32px 22px 32px;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .module-card:hover {
+            transform: translateY(-6px) scale(1.025);
+            box-shadow: 0 16px 40px rgba(44,62,80,0.13);
+        }
+        .image-row {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            justify-content: center;
+            margin-bottom: 18px;
+        }
+        .image-row img {
+            width: 300px;
+            max-width: 180px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 14px;
+            box-shadow: 0 4px 16px rgba(44,62,80,0.10);
+        }
+        .module-card h3 {
+            font-size: 1.25rem;
+            color: #2c3e50;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .module-card p {
+            font-size: 1.05rem;
+            color: #444;
+            margin: 0 0 10px 0;
+            text-align: center;
+        }
+        .module-card ul {
+            margin: 0 0 10px 0;
+            padding-left: 18px;
+            color: #555;
+            font-size: 0.98rem;
+            text-align: left;
+        }
+        .module-card ul li {
+            margin-bottom: 6px;
+        }
+        .call-to-action {
+            background: linear-gradient(135deg, #0d47a1, #9c27b0);
+            color: white;
+            border-radius: 25px;
+            padding: 40px;
+            margin: 40px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .call-to-action::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 25s linear infinite;
+        }
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .cta-content {
+            position: relative;
+            z-index: 2;
+        }
+        .cta-title {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+        }
+        .cta-text {
+            font-size: 1.15rem;
+            opacity: 0.95;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .back-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 14px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            margin-top: 18px;
+            box-shadow: 0 6px 18px rgba(102,126,234,0.18);
+            transition: background 0.2s, transform 0.2s;
+        }
+        .back-button:hover {
+            background: linear-gradient(135deg, #764ba2, #667eea);
+            transform: translateY(-2px) scale(1.03);
+        }
+        @media (max-width: 900px) {
+            .modules-grid {
+                flex-direction: column;
+                align-items: center;
+            }
+            .container {
+                padding: 18px 4vw 18px 4vw;
+            }
+            .module-card {
+                width: 98vw;
+                max-width: 98vw;
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+        }
+        @media (max-width: 600px) {
+            .main-heading h1 {
+                font-size: 1.3rem;
+            }
+            .module-card {
+                width: 98vw;
+                max-width: 340px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="floating-shapes">
+            <div class="shape"></div>
+            <div class="shape"></div>
+            <div class="shape"></div>
+        </div>
+        <div class="container">
+            <div class="main-heading">
+                <img class="logo" src="DLTP logo.jpg" alt="Platform Logo">
+                <h1>Digital Citizenship<br>డిజిటల్ పౌరసత్వం</h1>
+            </div>
+            <p class="intro-text">
+                Being a responsible digital citizen means using the internet safely, ethically, and respectfully. It helps build a positive and secure online environment for everyone.<br>
+                బాధ్యతాయుతమైన డిజిటల్ పౌరుడిగా ఉండటం అంటే ఇంటర్నెట్‌ను సురక్షితంగా, నైతికంగా, గౌరవప్రదంగా ఉపయోగించడం. ఇది అందరికీ సానుకూలమైన మరియు సురక్షితమైన ఆన్‌లైన్ వాతావరణాన్ని నిర్మించడంలో సహాయపడుతుంది.
+            </p>
+            <div class="modules-grid">
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://tse2.mm.bing.net/th?id=OIP.3D_GBtQporwRHiTIyNZeqwHaEK&pid=Api&P=0&h=180" alt="Ethical Online Behavior">
+                        <img src="https://www.internetstarters.com/wp-content/uploads/2021/11/Cyber-Talk-1.jpg" alt="Ethics Online">
+                    </div>
+                    <h3>Ethical Online Behavior<br>నైతిక ఆన్‌లైన్ ప్రవర్తన</h3>
+                    <p>Ethical behavior online means doing the right thing when using the internet. Treat others with respect, protect others' rights, and follow rules just like in real life.<br>
+                    ఆన్‌లైన్‌లో నైతిక ప్రవర్తన అంటే ఇంటర్నెట్‌ను ఉపయోగిస్తున్నప్పుడు సరైనదాన్ని చేయడం. ఇతరులను గౌరవించండి, వారి హక్కులను రక్షించండి, మరియు నిజ జీవితంలో ఉన్నట్లే నియమాలను పాటించండి.</p>
+                    <ul>
+                        <li>Respect others' privacy and do not share their personal information without consent.<br>ఇతరుల గోప్యతను గౌరవించండి మరియు వారి అనుమతి లేకుండా వారి వ్యక్తిగత సమాచారాన్ని పంచుకోకండి.</li>
+                        <li>Follow copyright laws — do not copy or use others' work without permission.<br>కాపీరైట్ చట్టాలను పాటించండి — ఇతరుల పనిని వారి అనుమతి లేకుండా కాపీ చేయకండి లేదా ఉపయోగించకండి.</li>
+                        <li>Be polite and kind in messages, posts, and comments.<br>సందేశాలు, పోస్ట్‌లు, వ్యాఖ్యల్లో మర్యాదగా మరియు దయతో ఉండండి.</li>
+                        <li>Report cyberbullying and harmful content to trusted adults or platforms.<br>సైబర్ బుల్లీయింగ్ మరియు హానికరమైన కంటెంట్‌ను నమ్మదగిన పెద్దలకు లేదా ప్లాట్‌ఫారమ్‌లకు నివేదించండి.</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://thumbs.dreamstime.com/z/communication-network-people-concept-connected-socializing-electronic-communicating-devices-36894978.jpg" alt="Respectful Online Communication">
+                        <img src="https://thumbs.dreamstime.com/z/business-people-internet-connecting-network-communication-concept-47572724.jpg" alt="Online Communication">
+                    </div>
+                    <h3>Respectful Online Communication<br>గౌరవప్రదమైన ఆన్‌లైన్ కమ్యూనికేషన్</h3>
+                    <p>When talking to others online, use respectful words and behave thoughtfully. Remember, your words can affect others.<br>
+                    ఇతరులతో ఆన్‌లైన్‌లో మాట్లాడేటప్పుడు గౌరవప్రదమైన పదాలను ఉపయోగించండి మరియు ఆలోచించి ప్రవర్తించండి. మీ మాటలు ఇతరులను ప్రభావితం చేయగలవని గుర్తుంచుకోండి.</p>
+                    <ul>
+                        <li>Think before you type — avoid hurtful language.<br>టైప్ చేయడానికి ముందు ఆలోచించండి — బాధించే పదాలను నివారించండి.</li>
+                        <li>Use greetings, please, and thank you, just like in face-to-face conversation.<br>ముఖాముఖి సంభాషణలో వాడినట్లే అభివాదాలు, దయచేసి, ధన్యవాదాలు వాడండి.</li>
+                        <li>Don't spread rumors or gossip.<br>పుకార్లు లేదా గాసిప్‌ను వ్యాప్తి చేయకండి.</li>
+                        <li>Listen to others' opinions even if you disagree.<br>మీరు అంగీకరించకపోయినా ఇతరుల అభిప్రాయాలను వినండి.</li>
+                    </ul>
+                </div>
+                <div class="module-card">
+                    <div class="image-row">
+                        <img src="https://tse3.mm.bing.net/th?id=OIP._HMhvEkog97EP6n5u_CTBAHaE8&pid=Api&P=0&h=180" alt="Avoid Online Harassment">
+                        <img src="https://tse3.mm.bing.net/th?id=OIP.JJM04tnlI6fWF1lEbvsDLQHaEo&pid=Api&P=0&h=180" alt="Online Safety Shield">
+                    </div>
+                    <h3>Avoid Online Harassment<br>ఆన్‌లైన్ వేధింపులను నివారించండి</h3>
+                    <p>Online harassment includes bullying, threats, or repeated messages that make someone uncomfortable. It's important to recognize and stop this behavior.<br>
+                    ఆన్‌లైన్ వేధింపులు అంటే ఇతరులను అసౌకర్యానికి గురిచేసే బుల్లీయింగ్, బెదిరింపులు లేదా పునరావృత సందేశాలు. ఈ ప్రవర్తనను గుర్తించి ఆపడం చాలా ముఖ్యం.</p>
+                    <ul>
+                        <li><strong>Types of online harassment:</strong> cyberbullying, trolling, doxxing, hate speech.<br><strong>ఆన్‌లైన్ వేధింపుల రకాలు:</strong> సైబర్ బుల్లీయింగ్, ట్రోలింగ్, డాక్సింగ్, ద్వేషపూరిత పదజాలం.</li>
+                        <li>Block users who harass or threaten you.<br>వేధించే లేదా బెదిరించే యూజర్లను బ్లాక్ చేయండి.</li>
+                        <li>Do not reply to hurtful messages — take screenshots and report them.<br>బాధించే సందేశాలకు స్పందించకండి — స్క్రీన్‌షాట్‌లు తీసి నివేదించండి.</li>
+                        <li>Use platform tools to report abusive behavior.<br>దుర్వినియోగ ప్రవర్తనను నివేదించడానికి ప్లాట్‌ఫారమ్ టూల్స్‌ను ఉపయోగించండి.</li>
+                        <li>Talk to a trusted adult or authority if you feel unsafe online.<br>మీరు ఆన్‌లైన్‌లో అసురక్షితంగా ఉన్నారని భావిస్తే నమ్మదగిన పెద్దవారితో లేదా అధికారులతో మాట్లాడండి.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="call-to-action">
+                <div class="cta-content">
+                    <h3 class="cta-title">🌟 Be a Good Digital Citizen<br>మంచి డిజిటల్ పౌరుడిగా ఉండండి</h3>
+                    <p class="cta-text">Remember that your online actions have real-world impact. By practicing ethical behavior, respectful communication, and standing against harassment, you help create a safer and more positive digital world for everyone.<br>
+                    మీ ఆన్‌లైన్ చర్యలు నిజ జీవితంపై ప్రభావం చూపుతాయని గుర్తుంచుకోండి. నైతిక ప్రవర్తన, గౌరవప్రదమైన కమ్యూనికేషన్, వేధింపులకు వ్యతిరేకంగా నిలబడడం ద్వారా, మీరు అందరికీ మరింత సురక్షితమైన మరియు సానుకూలమైన డిజిటల్ ప్రపంచాన్ని సృష్టించడంలో సహాయపడతారు.</p>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <a href="OnlineSafety.html" class="back-button">← Back to Online Safety</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
